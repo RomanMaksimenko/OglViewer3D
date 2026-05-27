@@ -1,0 +1,40 @@
+<mxfile host="Electron" modified="2026-05-26T18:23:35.869Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="LU_j22mJwJ9suqCOgHER" version="23.1.5" type="device">
+  <diagram name="Страница — 1" id="BQDcPSzY-2S-XiP7x_mz">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="520" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="260" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-4" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="120" width="260" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-5" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;VIEW&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="290" y="75" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-6" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;UiView&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-7" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="120" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-8" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;OpenGLView&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="135" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-9" value="OpenGL часть, отвечает за отрисовку модели, загрузку шейдеров, создани и хранение VAO,VBO и т.д." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="190" width="210" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-10" value="Стандартная часть UI, отвечающая за кнопки, диалоговые окна и т.д." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="IvxL2WqP4rn6kAu4sgb4-11" value="&lt;p class=&quot;my-2 [&amp;amp;+p]:mt-4 [&amp;amp;_strong:has(+br)]:inline-block [&amp;amp;_strong:has(+br)]:pb-2&quot;&gt;Планируется реализовать кнопки для поворота и перемещения модели на экране.&lt;/p&gt;&lt;p class=&quot;my-2 [&amp;amp;+p]:mt-4 [&amp;amp;_strong:has(+br)]:inline-block [&amp;amp;_strong:has(+br)]:pb-2&quot;&gt;При нажатии на кнопку &lt;code&gt;UIView&lt;/code&gt; отправляет сигнал в &lt;code&gt;View&lt;/code&gt;.&lt;br&gt;&lt;code&gt;View&lt;/code&gt; уведомляет контроллер об изменении, а контроллер передаёт новые данные в модель.&lt;br&gt;После успешного обновления модель сообщает контроллеру об изменении.&lt;br&gt;Контроллер, в свою очередь, уведомляет &lt;code&gt;View&lt;/code&gt;, что модель обновилась и требуется перерисовка экрана&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="640" y="135" width="300" height="420" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
