@@ -1,0 +1,49 @@
+<mxfile host="Electron" modified="2026-05-28T16:46:23.725Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="vqjA0e9_Db5GLddGIzzh" version="23.1.5" type="device">
+  <diagram name="Страница — 1" id="bxmyne32nafDLMe24a4o">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-1" value="CommonView : public QWIdget" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="114" y="160" width="300" height="354" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-2" value="QPushButton * move(Right/Left/Up/Down)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="26" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-3" value="QPushButton * rotateX (+/- angle)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="52" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-4" value="QPushButton * rotateY(+/- angle)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="78" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-5" value="QPushButton * rotateXZ(+/- angle)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="104" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-6" value="ICommonViewObserver * m_viewObserver" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="130" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-7" value="public:" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="156" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-8" value="void SetCommonViewObserver(ICommonViewObserver * observer)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="182" width="300" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-9" value="slots" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="250" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-10" value="MoveButtonsPushed()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="276" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-11" value="RotateButtonsPushed()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="302" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-12" value="ScaleButtonPushed()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="JZ4K_nNqubNlX2YcLpDL-1">
+          <mxGeometry y="328" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="JZ4K_nNqubNlX2YcLpDL-14" value="Common view представляет собой виджет, на котором расположены кнопки для изменения модели. Специальный интерфейс для него не требуется" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="160" width="260" height="360" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
