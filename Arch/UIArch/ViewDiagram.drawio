@@ -19,7 +19,7 @@
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-12" value="MainWindow : public QMainWindow, IView" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="120" y="430" width="330" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="r78E2_n_4Sw7PUzBjdpD-13" value="QWidget * m_commonView;&lt;div&gt;IRenderView m_renderView;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-12" vertex="1">
+        <mxCell id="r78E2_n_4Sw7PUzBjdpD-13" value="&lt;div&gt;IRenderView m_renderView;&lt;/div&gt;&lt;div&gt;QWidget * m_commonView;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-12" vertex="1">
           <mxGeometry y="26" width="330" height="54" as="geometry" />
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-14" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="r78E2_n_4Sw7PUzBjdpD-12" vertex="1">
