@@ -92,7 +92,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-36" value="CommonView : public QWIdget" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-240" y="484" width="300" height="324" as="geometry" />
+          <mxGeometry x="-240" y="484" width="300" height="354" as="geometry" />
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-37" value="QPushButton * move(Right/Left/Up/Down)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
           <mxGeometry y="26" width="300" height="26" as="geometry" />
@@ -112,20 +112,20 @@
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-42" value="public:" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
           <mxGeometry y="156" width="300" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="r78E2_n_4Sw7PUzBjdpD-43" value="void SetViewObserver(IViewObserver * observer)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
-          <mxGeometry y="182" width="300" height="38" as="geometry" />
+        <mxCell id="r78E2_n_4Sw7PUzBjdpD-43" value="void SetCommonViewObserver(ICommonViewObserver * observer)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
+          <mxGeometry y="182" width="300" height="68" as="geometry" />
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-44" value="slots" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
-          <mxGeometry y="220" width="300" height="26" as="geometry" />
+          <mxGeometry y="250" width="300" height="26" as="geometry" />
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-45" value="MoveButtonsPushed()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
-          <mxGeometry y="246" width="300" height="26" as="geometry" />
+          <mxGeometry y="276" width="300" height="26" as="geometry" />
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-46" value="RotateButtonsPushed()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
-          <mxGeometry y="272" width="300" height="26" as="geometry" />
+          <mxGeometry y="302" width="300" height="26" as="geometry" />
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-47" value="ScaleButtonPushed()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="r78E2_n_4Sw7PUzBjdpD-36" vertex="1">
-          <mxGeometry y="298" width="300" height="26" as="geometry" />
+          <mxGeometry y="328" width="300" height="26" as="geometry" />
         </mxCell>
         <mxCell id="r78E2_n_4Sw7PUzBjdpD-48" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1.01;exitY=0.037;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="r78E2_n_4Sw7PUzBjdpD-36" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
