@@ -58,6 +58,9 @@ compile_commands.json
 *.bak
 *.swp
 
+# VisualStudio
+.vs/
+
 # vcpkg
 vcpkg_installed/
 
