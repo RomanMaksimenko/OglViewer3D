@@ -1,4 +1,4 @@
-
+п»ї
 add_executable(OGL3dViewer
     main.cpp )
 
@@ -8,7 +8,7 @@ target_include_directories(OGL3dViewer PRIVATE
 
 target_link_libraries(OGL3dViewer PRIVATE Qt6::Core UI Controller Document Math Model)
 
-# Добавим необходиме Qt dll рядом с исполняемым файлом
+# Р”РѕР±Р°РІРёРј РЅРµРѕР±С…РѕРґРёРјРµ Qt dll СЂСЏРґРѕРј СЃ РёСЃРїРѕР»РЅСЏРµРјС‹Рј С„Р°Р№Р»РѕРј
 find_program(WINDEPLOYQT_BIN windeployqt6
     HINTS "${QT_BIN_DIR}"
 )
@@ -20,7 +20,6 @@ if(WINDEPLOYQT_BIN)
         --compiler-runtime
         "$<TARGET_FILE:OGL3dViewer>"
     )
-else(
+else()
  message(FATAL_ERROR "Could not find windeployqt6.exe in ${QT_BIN_DIR}")
- )
 endif()
