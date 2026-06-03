@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.29)
+п»їcmake_minimum_required(VERSION 3.29)
 
 project(OGL3dViewer LANGUAGES CXX)
 
@@ -9,7 +9,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-# Настройки Qt и OpenGL держать локально в UI, только target зависит от них
+# РќР°СЃС‚СЂРѕР№РєРё Qt Рё OpenGL РґРµСЂР¶Р°С‚СЊ Р»РѕРєР°Р»СЊРЅРѕ РІ UI, С‚РѕР»СЊРєРѕ target Р·Р°РІРёСЃРёС‚ РѕС‚ РЅРёС…
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 find_package(OpenGL REQUIRED)
 
