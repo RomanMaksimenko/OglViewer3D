@@ -45,3 +45,36 @@ void ViewerController::RotateModel(Axis axis, float angle)
 void ViewerController::ScaleModel(float scale)
 {
 }
+
+
+//------------------------------------------------------------------------------
+/**
+   Получить вершины для отрисовки
+*/
+//---
+std::vector<Vertex> ViewerController::GetVertexes() const
+{
+  return {};
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Получить индексы порядка отрисовки вершин
+*/
+//---
+std::vector<unsigned int> ViewerController::GetIndices() const
+{
+  return {};
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Получить матрицу MVP
+*/
+//---
+Matrix4f ViewerController::GetMVPMatrix() const
+{
+  return {};
+}
