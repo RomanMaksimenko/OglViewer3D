@@ -8,7 +8,7 @@ target_include_directories(OGL3dViewer PRIVATE
 
 target_link_libraries(OGL3dViewer PRIVATE Qt6::Core UI Controller Document Math Model)
 
-# Добавим необходиме Qt dll рядом с исполняемым файлом
+# Добавим необходимые Qt dll рядом с исполняемым файлом
 find_program(WINDEPLOYQT_BIN windeployqt6
     HINTS "${QT_BIN_DIR}"
 )
