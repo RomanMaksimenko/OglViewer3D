@@ -15,7 +15,6 @@ find_package(OpenGL REQUIRED)
 
 add_subdirectory(Source)
 add_subdirectory(Source/Controller)
-add_subdirectory(Source/Document)
 add_subdirectory(Source/Math)
 add_subdirectory(Source/Model)
 add_subdirectory(Source/UI)
