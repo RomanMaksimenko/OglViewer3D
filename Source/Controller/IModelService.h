@@ -16,6 +16,8 @@
 ////////////////////////////////////////////////////////////////////////
 struct IModelService
 {
+  virtual ~IModelService() = default;
+
   /// Загрузить модель с диска
   virtual bool Load(const std::string & path) = 0;
   /// Записать модель на диск
