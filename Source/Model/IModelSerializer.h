@@ -19,6 +19,8 @@ struct IModel;
 ////////////////////////////////////////////////////////////////////////
 struct IModelSerializer
 {
+  virtual ~IModelSerializer() = default;
+
   virtual bool serialize(const IModel & model, std::ostream & out) = 0;
   virtual std::unique_ptr<IModel> deSerialize(std::istream & in) = 0;
 };

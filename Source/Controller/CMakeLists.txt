@@ -2,6 +2,7 @@ add_library(Controller)
 
 set(CONTROLLER_PRIVATE_SOURCES
     "ViewerController.cpp"
+    "Serializer/ModelSerializer.cpp"
 )
 
 set(CONTROLLER_PUBLIC_HEADERS
