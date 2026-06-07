@@ -6,6 +6,7 @@ set(MODEL_PRIVATE_SOURCES
 
 set(MODEL_PUBLIC_HEADERS
    "IModelSerializer.h"
+   "IModelService.h"
 )
 
 target_sources(Model PRIVATE
