@@ -1,11 +1,12 @@
 add_library(Model)
 
 set(MODEL_PRIVATE_SOURCES
-    "Model.cpp"
+    "Serializer/ModelSerializer.cpp"
 )
 
 set(MODEL_PUBLIC_HEADERS
    "IModelSerializer.h"
+   "Creator.h"
 )
 
 target_sources(Model PRIVATE
@@ -15,5 +16,5 @@ target_sources(Model PRIVATE
  )
 
 target_include_directories(Model PUBLIC
-   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_SOURCE_DIR}/Source
 )
