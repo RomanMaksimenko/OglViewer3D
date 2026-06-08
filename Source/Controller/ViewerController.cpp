@@ -1,11 +1,13 @@
 ﻿#include "ViewerController.h"
 
+#include "IModelService.h"
+
 
 struct IView
 {
 };
 
-struct IDocument
+struct IModel
 {
 };
 
@@ -13,7 +15,12 @@ struct IDocument
 /**
 */
 //---
-ViewerController::ViewerController() = default;
+ViewerController::ViewerController()
+  : m_view(nullptr)
+  , m_model(nullptr)
+  , m_modelService(CreateModelService())
+{
+}
 
 ViewerController::~ViewerController() = default;
 

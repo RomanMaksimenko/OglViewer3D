@@ -25,3 +25,7 @@ struct IModelService
   /// Записать модель как
   virtual void SaveAs(const std::string & path) = 0;
 };
+
+
+/// Функция создания объекта
+IModelService * CreateModelService();

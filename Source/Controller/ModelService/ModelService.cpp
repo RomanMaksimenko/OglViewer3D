@@ -41,3 +41,14 @@ void ModelService::Save()
 void ModelService::SaveAs(const std::string & path)
 {
 }
+
+
+//------------------------------------------------------------------------------
+/**
+   Функция создания объекта
+*/
+//---
+IModelService* CreateModelService()
+{
+  return new ModelService();
+}
