@@ -5,6 +5,7 @@ set(MODEL_PRIVATE_SOURCES
 )
 
 set(MODEL_PUBLIC_HEADERS
+   "IModel.h"
    "IModelSerializer.h"
    "Creator.h"
 )
