@@ -10,8 +10,9 @@
 #include "IModelProvider.h"
 #include "IViewObserver.h"
 
-struct IDocument;
+struct IModel;
 struct IView;
+struct IModelService;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,8 +28,9 @@ struct IView;
 class ViewerController : public IViewObserver,
                                 IModelProvider
 {
-  std::unique_ptr<IView> m_view;         ///< Представление
-  std::unique_ptr<IDocument> m_Document; ///< Документ
+  std::unique_ptr<IView> m_view;      ///< Представление
+  std::unique_ptr<IModel> m_model; ///< Модель
+  std::unique_ptr<IModelService> m_modelService;///< Объект, для чтения/записи модели
 
 public:
   ViewerController();
