@@ -2,14 +2,13 @@
 
 #include "IModelService.h"
 
+#include <Model/ModelImpl/Model.h>
+
 
 struct IView
 {
 };
 
-struct IModel
-{
-};
 
 //------------------------------------------------------------------------------
 /**
@@ -17,7 +16,7 @@ struct IModel
 //---
 ViewerController::ViewerController()
   : m_view(nullptr)
-  , m_model(nullptr)
+  , m_model(new Model())
   , m_modelService(CreateModelService())
 {
 }

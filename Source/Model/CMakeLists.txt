@@ -2,9 +2,11 @@ add_library(Model)
 
 set(MODEL_PRIVATE_SOURCES
     "Serializer/ModelSerializer.cpp"
+    "ModelImpl/Model.cpp"
 )
 
 set(MODEL_PUBLIC_HEADERS
+   "IModel.h"
    "IModelSerializer.h"
    "Creator.h"
 )
