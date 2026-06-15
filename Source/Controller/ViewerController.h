@@ -37,11 +37,11 @@ public:
   ~ViewerController();
   /// IViewObserver
   // Обработка нажатия на кнопки трансляции
-  virtual void MoveModel(Direction dir, float delta) override;
+  virtual void MoveModel(Direction dir) override;
   // Обработка нажатия на кнопки вращения модели
-  virtual void RotateModel(Axis axis, float angle) override;
+  virtual void RotateModel(Axis axis,RotationDirection rDir) override;
   // Обработка нажатия на кнопки масштаба
-  virtual void ScaleModel(float scale) override;
+  virtual void ScaleModel(Scaling scale) override;
   /// IModelProvider
   /// Получить вершины для отрисовки
   virtual std::vector<Vertex> GetVertexes() const;

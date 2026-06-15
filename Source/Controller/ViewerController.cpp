@@ -28,7 +28,7 @@ ViewerController::~ViewerController() = default;
    Обработка события движение модели
 */
 //---
-void ViewerController::MoveModel(Direction dir, float delta)
+void ViewerController::MoveModel(Direction dir)
 {
 }
 
@@ -38,7 +38,7 @@ void ViewerController::MoveModel(Direction dir, float delta)
    Обработка события вращения модели
 */
 //---
-void ViewerController::RotateModel(Axis axis, float angle)
+void ViewerController::RotateModel(Axis axis, RotationDirection rDir)
 {
 }
 
@@ -48,7 +48,7 @@ void ViewerController::RotateModel(Axis axis, float angle)
    Обработка события масштабирования модели
 */
 //---
-void ViewerController::ScaleModel(float scale)
+void ViewerController::ScaleModel(Scaling scale)
 {
 }
 

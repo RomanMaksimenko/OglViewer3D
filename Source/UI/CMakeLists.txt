@@ -1,11 +1,20 @@
 ﻿add_library(UI)
 
-target_sources(UI PRIVATE
-  UI.cpp
+set(UI_PRIVATE_SOURCES
+    "ControlButtonsView/ControlButtonsView.cpp"
+)
+set(UI_PUBLIC_HEADERS
+    "IControlButtonsView.h"
 )
 
+target_sources(UI PRIVATE
+  ${UI_PRIVATE_SOURCES}
+  PUBLIC
+  ${UI_PUBLIC_HEADERS}
+ )
+
 target_include_directories(UI PUBLIC
-   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_SOURCE_DIR}/Source
 )
 
 # target UI зависит от Qt и OpenGL
