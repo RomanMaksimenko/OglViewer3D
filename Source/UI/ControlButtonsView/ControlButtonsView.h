@@ -13,6 +13,8 @@
 
 enum class Direction;
 enum class Axis;
+enum class RotationDirection;
+enum class Scaling;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -50,6 +52,6 @@ public:
 
 private slots:
   void MoveButtonPushed(Direction dir);
-  void RotateButtonPushed(Axis axis);
-  void ScaleButtonPushed(float sc);
+  void RotateButtonPushed(Axis axis, RotationDirection rDir);
+  void ScaleButtonPushed(Scaling sc);
 };

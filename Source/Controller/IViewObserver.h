@@ -27,6 +27,22 @@ enum class Axis
 };
 
 
+/// Направление вращения
+enum class RotationDirection
+{
+	CW, // по часовой стрелке
+	CCW // против часово стрелки
+};
+
+
+/// Масштабирование
+enum class Scaling
+{
+	INC, // увеличить
+	DESC // уменьшить
+};
+
+
 ////////////////////////////////////////////////////////////////////////
 //
 /// Интерфейс контроллера стандартной части UI.
@@ -40,9 +56,9 @@ struct IViewObserver
   virtual ~IViewObserver() {};
 
   // Обработка нажатия на кнопки трансляции
-  virtual void MoveModel(Direction dir, float delta) = 0;
+  virtual void MoveModel(Direction dir) = 0;
   // Обработка нажатия на кнопки вращения модели
-  virtual void RotateModel(Axis axis, float angle) = 0;
+  virtual void RotateModel(Axis axis,RotationDirection rDir) = 0;
   // Обработка нажатия на кнопки масштаба
-  virtual void ScaleModel(float scale) = 0;
+  virtual void ScaleModel(Scaling scale) = 0;
 };
