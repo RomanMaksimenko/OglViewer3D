@@ -2,9 +2,11 @@
 
 set(UI_PRIVATE_SOURCES
     "ControlButtonsView/ControlButtonsView.cpp"
+    "RenderView/RenderView.cpp"
 )
 set(UI_PUBLIC_HEADERS
     "IControlButtonsView.h"
+    "IRenderView.h"
 )
 
 target_sources(UI PRIVATE
@@ -18,7 +20,7 @@ target_include_directories(UI PUBLIC
 )
 
 # target UI зависит от Qt и OpenGL
-target_link_libraries(UI PUBLIC Qt6::Core Qt6::Widgets OpenGL::GL)
+target_link_libraries(UI PUBLIC Qt6::Core Qt6::Widgets Qt6::OpenGLWidgets OpenGL::GL)
 
 
 
