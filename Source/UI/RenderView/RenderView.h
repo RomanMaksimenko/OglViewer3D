@@ -7,13 +7,25 @@
 #pragma once
 
 #include <QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 #include "UI/IRenderView.h"
 
-class RenderView : public IRenderView,
-                   QOpenGLWidget
+
+////////////////////////////////////////////////////////////////////////////////
+//
+/// Виджет, содержащий поверхность отрисовки OpenGL
+/**
+*/
+////////////////////////////////////////////////////////////////////////////////
+class RenderView : public QOpenGLWidget,
+                   protected QOpenGLFunctions,
+                   public IRenderView
 {
-  IModelProvider * m_modelProvider;
+  Q_OBJECT
+
+private:
+  IModelProvider * m_modelProvider = nullptr;
 
 public:
   RenderView(QWidget * parent = nullptr);

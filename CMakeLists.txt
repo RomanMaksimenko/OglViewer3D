@@ -10,7 +10,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # Настройки Qt и OpenGL держать локально в UI, только target зависит от них
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets OpenGLWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets OpenGLWidgets Gui)
 find_package(OpenGL REQUIRED)
 
 add_subdirectory(Source)
