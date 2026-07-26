@@ -1,15 +1,19 @@
 ﻿#include "ViewerController.h"
 
 #include "IModelService.h"
+#include "UI/IView.h"
 
 #include <Model/ModelImpl/Model.h>
 
-
-struct IView
+struct View:public IView
 {
+  /// Установить подписчика на события представления
+  virtual void SetViewObserver(IViewObserver * observer) {}
+  /// Установить проводника модели
+  virtual void SetModelProvider(IModelProvider * modelProvider) {}
+  /// Отрисовать сцену
+  virtual void RenderScene() {}
 };
-
-
 //------------------------------------------------------------------------------
 /**
 */
@@ -22,6 +26,13 @@ ViewerController::ViewerController()
 }
 
 ViewerController::~ViewerController() = default;
+
+void ViewerController::initView(std::unique_ptr<IView> view)
+{
+  if (m_view)
+    m_view.release();
+  m_view = std::move(view);
+}
 
 //------------------------------------------------------------------------------
 /**

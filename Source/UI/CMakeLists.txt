@@ -3,6 +3,7 @@
 set(UI_PRIVATE_SOURCES
     "ControlButtonsView/ControlButtonsView.cpp"
     "RenderView/RenderView.cpp"
+    "ViewMainWindow/ViewMainWindow.cpp"
 )
 set(UI_PUBLIC_HEADERS
     "IControlButtonsView.h"

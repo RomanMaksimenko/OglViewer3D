@@ -10,6 +10,11 @@
 RenderView::RenderView(QWidget * parent)
   : QOpenGLWidget(parent)
 {
+	if (parent)
+	{
+    QSize parentSize = parent->size();
+    QWidget::resize(parentSize.width() / 2, parentSize.height() / 2);
+  }
 }
 
 
