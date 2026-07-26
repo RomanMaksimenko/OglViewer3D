@@ -49,6 +49,8 @@ public:
 
   /// IControlButtonsView/// Установить подписчика
   virtual void SetViewObserver(IViewObserver * observer) override;
+  /// Выдать указатель на себя как на QWidget
+  virtual QWidget * widget() override;
 
 private slots:
   void MoveButtonPushed(Direction dir);

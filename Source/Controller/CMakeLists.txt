@@ -10,6 +10,7 @@ set(CONTROLLER_PUBLIC_HEADERS
     "IModelProvider.h"
     "ViewerController.h"
     "IModelService.h"
+    "IViewFactory.h"
 )
 
 target_sources(Controller PRIVATE

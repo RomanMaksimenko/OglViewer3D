@@ -118,6 +118,17 @@ void ControlButtonsView::SetViewObserver(IViewObserver * observer)
 
 //------------------------------------------------------------------------------
 /**
+   Выдать указатель на себя как на QWidget
+*/
+//---
+QWidget * ControlButtonsView::widget()
+{
+  return this;
+}
+
+
+//------------------------------------------------------------------------------
+/**
    Обработка нажатия кнопки движения
 */
 //---
@@ -148,4 +159,15 @@ void ControlButtonsView::ScaleButtonPushed(Scaling sc)
 {
   if (m_viewObserver)
     m_viewObserver->ScaleModel(sc);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Функция создани
+*/
+//---
+IControlButtonsView * CreateControlButtonsView(QWidget * parent)
+{
+  return new ControlButtonsView(parent);
 }

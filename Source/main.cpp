@@ -3,13 +3,12 @@
 #include <QApplication>
 
 #include <ViewerController.h>
-#include <UI/ViewMainWindow/ViewMainWindow.h>
+#include <UI/ViewFactory/ViewFactory.h>
 
 int main(int argc, char * argv[])
 {
   QApplication app(argc, argv);
-  ViewerController vc;
-  vc.initView(std::make_unique<ViewMainWindow>());
-  std::cout << "Hello World!\n";
+  ViewFactory vf;
+  ViewerController vc(vf);
   return app.exec();
 }

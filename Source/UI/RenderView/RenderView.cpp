@@ -43,6 +43,17 @@ void RenderView::RenderScene()
 
 //------------------------------------------------------------------------------
 /**
+   Выдать указатель на себя как на QWidget
+*/
+//---
+QWidget * RenderView::widget()
+{
+  return this;
+}
+
+
+//------------------------------------------------------------------------------
+/**
    Отрисовать сцену
 */
 //---
@@ -72,4 +83,15 @@ void RenderView::initializeGL()
 {
   initializeOpenGLFunctions();
   glClearColor(0.0, 0.0, 0.0, 1.0);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Функция создания RenderView
+*/
+//---
+IRenderView* CreateRenderView(QWidget* parent)
+{
+  return new RenderView(parent);
 }
