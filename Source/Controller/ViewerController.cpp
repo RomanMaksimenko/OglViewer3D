@@ -1,6 +1,7 @@
 ﻿#include "ViewerController.h"
 
 #include "IModelService.h"
+#include "IViewFactory.h"
 #include "UI/IView.h"
 
 #include <Model/ModelImpl/Model.h>
@@ -18,8 +19,8 @@ struct View:public IView
 /**
 */
 //---
-ViewerController::ViewerController()
-  : m_view(nullptr)
+ViewerController::ViewerController(IViewFactory & viewFactory)
+  : m_view(viewFactory.CreateView())
   , m_model(new Model())
   , m_modelService(CreateModelService())
 {
@@ -27,12 +28,6 @@ ViewerController::ViewerController()
 
 ViewerController::~ViewerController() = default;
 
-void ViewerController::initView(std::unique_ptr<IView> view)
-{
-  if (m_view)
-    m_view.release();
-  m_view = std::move(view);
-}
 
 //------------------------------------------------------------------------------
 /**

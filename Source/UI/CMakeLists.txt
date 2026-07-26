@@ -4,10 +4,12 @@ set(UI_PRIVATE_SOURCES
     "ControlButtonsView/ControlButtonsView.cpp"
     "RenderView/RenderView.cpp"
     "ViewMainWindow/ViewMainWindow.cpp"
+    "ViewFactory/ViewFactory.cpp"
 )
 set(UI_PUBLIC_HEADERS
     "IControlButtonsView.h"
     "IRenderView.h"
+    "ViewFactory/ViewFactory.h"
 )
 
 target_sources(UI PRIVATE

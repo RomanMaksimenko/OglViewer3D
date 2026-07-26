@@ -13,6 +13,7 @@
 struct IModel;
 struct IView;
 struct IModelService;
+struct IViewFactory;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +34,7 @@ class ViewerController : public IViewObserver,
   std::unique_ptr<IModelService> m_modelService;///< Объект, для чтения/записи модели
 
 public:
-  ViewerController();
+  explicit ViewerController(IViewFactory & viewFactory);
   ~ViewerController();
   /// IViewObserver
   // Обработка нажатия на кнопки трансляции
@@ -49,6 +50,4 @@ public:
   virtual std::vector<unsigned int> GetIndices() const;
   /// Получить матрицу MVP
   virtual Matrix4f GetMVPMatrix() const;
-
-  void initView(std::unique_ptr<IView> view);
 };
