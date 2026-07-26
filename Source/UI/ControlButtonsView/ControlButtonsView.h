@@ -23,7 +23,7 @@ enum class Scaling;
 */
 ////////////////////////////////////////////////////////////////////////////////
 class ControlButtonsView : public QWidget,
-                           IControlButtonsView
+                           public IControlButtonsView
 {
   Q_OBJECT
 

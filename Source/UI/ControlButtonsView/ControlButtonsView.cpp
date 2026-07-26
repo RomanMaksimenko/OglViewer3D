@@ -39,17 +39,17 @@ ControlButtonsView::ControlButtonsView(QWidget * parent)
   QLabel * translate = new QLabel("Перемещение :");
   verticalLayout->addWidget(translate, 0, Qt::AlignCenter);
 
-  QHBoxLayout * translateLR = new QHBoxLayout(this);
+  QHBoxLayout * translateLR = new QHBoxLayout();
   translateLR->addWidget(moveLeft);
   translateLR->addWidget(moveRight);
   verticalLayout->addLayout(translateLR);
 
-  QHBoxLayout * translateUD = new QHBoxLayout(this);
+  QHBoxLayout * translateUD = new QHBoxLayout();
   translateUD->addWidget(moveUp);
   translateUD->addWidget(moveDown);
   verticalLayout->addLayout(translateUD);
 
-  QHBoxLayout * translateFB = new QHBoxLayout(this);
+  QHBoxLayout * translateFB = new QHBoxLayout();
   translateFB->addWidget(moveFront);
   translateFB->addWidget(moveBack);
   verticalLayout->addLayout(translateFB);
@@ -59,19 +59,19 @@ ControlButtonsView::ControlButtonsView(QWidget * parent)
   verticalLayout->addWidget(rotate, 0, Qt::AlignCenter);
   QLabel * axisX = new QLabel("Ось X");
   verticalLayout->addWidget(axisX, 0, Qt::AlignCenter);
-  QHBoxLayout * rotateX = new QHBoxLayout(this);
+  QHBoxLayout * rotateX = new QHBoxLayout();
   rotateX->addWidget(rotateCWX);
   rotateX->addWidget(rotateCCWX);
   verticalLayout->addLayout(rotateX);
   QLabel * axisY = new QLabel("Ось Y");
   verticalLayout->addWidget(axisY, 0, Qt::AlignCenter);
-  QHBoxLayout * rotateY = new QHBoxLayout(this);
+  QHBoxLayout * rotateY = new QHBoxLayout();
   rotateY->addWidget(rotateCWY);
   rotateY->addWidget(rotateCCWY);
   verticalLayout->addLayout(rotateY);
   QLabel * axisZ = new QLabel("Ось Z");
   verticalLayout->addWidget(axisZ, 0, Qt::AlignCenter);
-  QHBoxLayout * rotateZ = new QHBoxLayout(this);
+  QHBoxLayout * rotateZ = new QHBoxLayout();
   rotateZ->addWidget(rotateCWZ);
   rotateZ->addWidget(rotateCCWZ);
   verticalLayout->addLayout(rotateZ);
@@ -79,7 +79,7 @@ ControlButtonsView::ControlButtonsView(QWidget * parent)
   // Наполнение блока "Масштаб"
   QLabel * scale = new QLabel("Масштаб :");
   verticalLayout->addWidget(scale, 0, Qt::AlignCenter);
-  QHBoxLayout * scaleBtns = new QHBoxLayout(this);
+  QHBoxLayout * scaleBtns = new QHBoxLayout();
   scaleBtns->addWidget(scaleUp);
   scaleBtns->addWidget(scaleDown);
   verticalLayout->addLayout(scaleBtns);

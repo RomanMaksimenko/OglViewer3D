@@ -49,4 +49,6 @@ public:
   virtual std::vector<unsigned int> GetIndices() const;
   /// Получить матрицу MVP
   virtual Matrix4f GetMVPMatrix() const;
+
+  void initView(std::unique_ptr<IView> view);
 };
