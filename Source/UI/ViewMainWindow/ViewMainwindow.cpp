@@ -2,19 +2,19 @@
 
 #include <QHBoxLayout>
 
-#include "UI/ControlButtonsView/ControlButtonsView.h"
-#include "UI/RenderView/RenderView.h"
+#include "UI/IControlButtonsView.h"
+#include "UI/IRenderView.h"
 
 
 ViewMainWindow::ViewMainWindow(QWidget* parent)
 	: QMainWindow(parent)
-	, m_buttonsView(new ControlButtonsView(this))
-	, m_renderView(new RenderView(this))
+	, m_buttonsView(CreateControlButtonsView(this))
+	, m_renderView(CreateRenderView(this))
 {
   QWidget * centralWidget = new QWidget(this);
   QHBoxLayout * layout = new QHBoxLayout(centralWidget);
-  layout->addWidget(static_cast<ControlButtonsView*>(m_buttonsView));
-  layout->addWidget(static_cast<RenderView *>(m_renderView));
+  layout->addWidget(m_buttonsView->widget());/// TODO убрать статик касты
+  layout->addWidget(m_renderView->widget());
   centralWidget->setLayout(layout);
   setCentralWidget(centralWidget);
   resize(1024, 768);

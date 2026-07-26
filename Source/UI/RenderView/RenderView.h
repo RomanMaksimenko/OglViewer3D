@@ -34,7 +34,9 @@ public:
   /// Установить проводника модели
   virtual void SetModelProvider(IModelProvider * modelProvider) override;
   /// Отрисовать сцену
-  virtual void RenderScene() override;
+  virtual void RenderScene() override; 
+  /// Выдать указатель на себя как на QWidget
+  virtual QWidget * widget() override;
 
 protected:
   /// QOpenGLWidget

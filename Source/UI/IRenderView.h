@@ -7,7 +7,7 @@
 #pragma once
 
 struct IModelProvider;
-
+class QWidget;
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -22,5 +22,11 @@ struct IRenderView
   /// Установить проводника модели
   virtual void SetModelProvider(IModelProvider * modelProvider) = 0;
   /// Отрисовать сцену
-  virtual void RenderScene() = 0;
+  virtual void RenderScene() = 0; 
+  /// Выдать указатель на себя как на QWidget
+  virtual QWidget * widget() = 0;
 };
+
+
+/// Функция создания
+IRenderView * CreateRenderView(QWidget * parent);
