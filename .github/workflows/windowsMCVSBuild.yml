@@ -1,0 +1,58 @@
+name: Windows Build with Qt & MSVC (Manual)
+
+on:
+  workflow_dispatch: # Только ручной запуск через кнопку в GitHub UI
+
+env:
+  # Настройки для Qt
+  QT_VERSION: 6.8.1 # Ваша версия Qt
+  QT_HOST: windows
+  QT_TARGET: desktop-win64-msvc2022_64
+  
+  # Настройки для CMake
+  BUILD_TYPE: Release
+  BUILD_DIR: ${{ github.workspace }}/build
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    # 1. Клонирование репозитория
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+
+    # 2. Установка Qt
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{ env.QT_VERSION }}
+        host: ${{ env.QT_HOST }}
+        target: ${{ env.QT_TARGET }}
+        arch: win64_msvc2022_64
+        cache: true
+
+    # 3. Настройка MSVC
+    - name: Setup MSVC environment
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    # 4. Настройка CMake
+    - name: Configure CMake
+      run: |
+        cmake -B ${{ env.BUILD_DIR }} `
+              -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} `
+              -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" `
+              -G "Visual Studio 17 2022" `
+              -A x64
+      shell: pwsh
+
+    # 5. Сборка проекта
+    - name: Build project
+      run: |
+        cmake --build ${{ env.BUILD_DIR }} `
+              --config ${{ env.BUILD_TYPE }} `
+              --parallel 4
