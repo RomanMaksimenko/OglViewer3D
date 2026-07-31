@@ -1,13 +1,10 @@
-name: Windows Build with Qt & MSVC (Manual)
+name: Windows Build with Qt & MSVC (Manual - Ninja)
 
 on:
-  workflow_dispatch: # Только ручной запуск через кнопку в GitHub UI
+  workflow_dispatch:
 
 env:
-  # Настройки для Qt
-  QT_VERSION: 6.8.1 # Ваша версия Qt
-  QT_HOST: windows
-  QT_TARGET: desktop
+  QT_VERSION: 6.8.1
   BUILD_TYPE: Release
   BUILD_DIR: ${{ github.workspace }}/build
 
@@ -16,48 +13,42 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    # 1. Клонирование
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         submodules: 'recursive'
 
-    # 2. Установка Qt
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
         version: ${{ env.QT_VERSION }}
-        host: ${{ env.QT_HOST }}
-        target: ${{ env.QT_TARGET }}
+        host: windows
+        target: desktop-win64-msvc2022_64
         arch: win64_msvc2022_64
         cache: true
 
-    # 3. ВАЖНО: Настройка MSVC окружения
     - name: Setup MSVC environment
       uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: x64
 
-    # 4. Проверка: какой компилятор доступен
-    - name: Verify compiler
-      run: |
-        cl.exe
-        where cl
-      shell: cmd  # Используем cmd для правильного распознавания
+    # Устанавливаем Ninja (он уже есть в runner, но на всякий случай)
+    - name: Install Ninja
+      run: choco install ninja -y
+      shell: pwsh
 
-    # 5. Конфигурация CMake - используем cmd вместо pwsh
-    - name: Configure CMake
+    # Используем Ninja вместо Visual Studio
+    - name: Configure with Ninja
       run: |
-        cmake -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DCMAKE_PREFIX_PATH="%Qt6_DIR%" -G "Visual Studio 17 2022" -A x64
+        cmake -B %BUILD_DIR% -G "Ninja" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DCMAKE_PREFIX_PATH="%Qt6_DIR%"
       shell: cmd
       env:
         BUILD_DIR: ${{ env.BUILD_DIR }}
         BUILD_TYPE: ${{ env.BUILD_TYPE }}
 
-    # 6. Сборка
-    - name: Build project
+    - name: Build with Ninja
       run: |
-        cmake --build %BUILD_DIR% --config %BUILD_TYPE% --parallel 4
+        cmake --build %BUILD_DIR% --config %BUILD_TYPE%
       shell: cmd
       env:
         BUILD_DIR: ${{ env.BUILD_DIR }}
