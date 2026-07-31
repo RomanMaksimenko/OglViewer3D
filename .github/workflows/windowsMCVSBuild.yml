@@ -8,8 +8,6 @@ env:
   QT_VERSION: 6.8.1 # Ваша версия Qt
   QT_HOST: windows
   QT_TARGET: desktop
-  
-  # Настройки для CMake
   BUILD_TYPE: Release
   BUILD_DIR: ${{ github.workspace }}/build
 
@@ -18,7 +16,7 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    # 1. Клонирование репозитория
+    # 1. Клонирование
     - name: Checkout code
       uses: actions/checkout@v4
       with:
@@ -34,25 +32,33 @@ jobs:
         arch: win64_msvc2022_64
         cache: true
 
-    # 3. Настройка MSVC
+    # 3. ВАЖНО: Настройка MSVC окружения
     - name: Setup MSVC environment
       uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: x64
 
-    # 4. Настройка CMake
+    # 4. Проверка: какой компилятор доступен
+    - name: Verify compiler
+      run: |
+        cl.exe
+        where cl
+      shell: cmd  # Используем cmd для правильного распознавания
+
+    # 5. Конфигурация CMake - используем cmd вместо pwsh
     - name: Configure CMake
       run: |
-        cmake -B ${{ env.BUILD_DIR }} `
-              -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} `
-              -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" `
-              -G "Visual Studio 17 2022" `
-              -A x64
-      shell: pwsh
+        cmake -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DCMAKE_PREFIX_PATH="%Qt6_DIR%" -G "Visual Studio 17 2022" -A x64
+      shell: cmd
+      env:
+        BUILD_DIR: ${{ env.BUILD_DIR }}
+        BUILD_TYPE: ${{ env.BUILD_TYPE }}
 
-    # 5. Сборка проекта
+    # 6. Сборка
     - name: Build project
       run: |
-        cmake --build ${{ env.BUILD_DIR }} `
-              --config ${{ env.BUILD_TYPE }} `
-              --parallel 4
+        cmake --build %BUILD_DIR% --config %BUILD_TYPE% --parallel 4
+      shell: cmd
+      env:
+        BUILD_DIR: ${{ env.BUILD_DIR }}
+        BUILD_TYPE: ${{ env.BUILD_TYPE }}
