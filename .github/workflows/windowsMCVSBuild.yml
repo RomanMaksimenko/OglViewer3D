@@ -7,7 +7,7 @@ env:
   # Настройки для Qt
   QT_VERSION: 6.8.1 # Ваша версия Qt
   QT_HOST: windows
-  QT_TARGET: desktop-win64-msvc2022_64
+  QT_TARGET: desktop
   
   # Настройки для CMake
   BUILD_TYPE: Release
