@@ -23,7 +23,7 @@ jobs:
       with:
         version: ${{ env.QT_VERSION }}
         host: windows
-        target: desktop-win64-msvc2022_64
+        target: desktop
         arch: win64_msvc2022_64
         cache: true
 
