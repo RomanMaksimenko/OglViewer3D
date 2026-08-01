@@ -29,12 +29,25 @@ const GLchar * fragmentShaderSource = "#version 330 core\n"
 //---
 RenderView::RenderView(QWidget * parent)
   : QOpenGLWidget(parent)
+  , m_VAO(-1)
+  , m_VBO(-1)
+  , m_EBO(-1)
+  , m_GLprogram(-1)
 {
   if (parent)
   {
     QSize parentSize = parent->size();
     QWidget::resize(parentSize.width() / 2, parentSize.height() / 2);
   }
+}
+
+//------------------------------------------------------------------------------
+/**
+*/
+//---
+RenderView::~RenderView()
+{
+  CleanUpGl();
 }
 
 
@@ -46,6 +59,7 @@ RenderView::RenderView(QWidget * parent)
 void RenderView::SetModelProvider(IModelProvider * modelProvider)
 {
   m_modelProvider = modelProvider;
+  CreateGLProgram();
 }
 
 
@@ -79,10 +93,13 @@ QWidget * RenderView::widget()
 void RenderView::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT);
-  glUseProgram(shaderProgram);
-  glBindVertexArray(VAO);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-  glBindVertexArray(0);
+  if (IsReadyToDraw())
+  {
+    glUseProgram(m_GLprogram);
+    glBindVertexArray(m_VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+  }
 }
 
 
@@ -103,6 +120,7 @@ void RenderView::resizeGL(int w, int h)
 //---
 void RenderView::initializeGL()
 {
+  // Сначала инициализируем glew
   glewExperimental = GL_TRUE;
   auto err = glewInit();
   if (err != GLEW_OK)
@@ -111,36 +129,94 @@ void RenderView::initializeGL()
   }
 
   glClearColor(0.0, 0.0, 0.0, 1.0);
-  GLfloat vertices[] = {-0.5, -0.5, 0.0, -0.5, 0.5, 0.0, 0.5, 0.5, 0.0,0.5,-0.5,0.0};
-  GLuint indices[] = {0, 1, 2,2,3,0};
-  glGenVertexArrays(1, &VAO);
-  glBindVertexArray(VAO);
+}
 
-  glGenBuffers(1, &VBO);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+
+//------------------------------------------------------------------------------
+/**
+   Создать программу отрисовки
+*/
+//---
+void RenderView::CreateGLProgram()
+{
+  if (!m_modelProvider)
+    return;
+
+  if (m_GLprogram == -1)
+  {
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &Shaders::vertexShaderSource, 0);
+    glCompileShader(vertexShader);
+
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &Shaders::fragmentShaderSource, NULL);
+    glCompileShader(fragmentShader);
+
+    m_GLprogram = glCreateProgram();
+    glAttachShader(m_GLprogram, vertexShader);
+    glAttachShader(m_GLprogram, fragmentShader);
+    glLinkProgram(m_GLprogram);
+
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+  }
+
+  auto vertices = m_modelProvider->GetVertexes();
+  auto indices = m_modelProvider->GetIndices();
+
+  glGenVertexArrays(1, &m_VAO);
+  glBindVertexArray(m_VAO);
+
+  glGenBuffers(1, &m_VBO);
+  glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
   glEnableVertexAttribArray(0);
 
-  glGenBuffers(1, &IBO);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+  glGenBuffers(1, &m_EBO);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+}
 
-  GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &Shaders::vertexShaderSource, 0);
-  glCompileShader(vertexShader);
 
-  GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &Shaders::fragmentShaderSource, NULL);
-  glCompileShader(fragmentShader);
+//------------------------------------------------------------------------------
+/**
+   Готов ли рендер к отрисовке
+*/
+//---
+bool RenderView::IsReadyToDraw() const
+{
+  return m_GLprogram != -1 && m_VAO != -1;
+}
 
-  shaderProgram = glCreateProgram();
-  glAttachShader(shaderProgram, vertexShader);
-  glAttachShader(shaderProgram, fragmentShader);
-  glLinkProgram(shaderProgram);
 
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
+//------------------------------------------------------------------------------
+/**
+   Освободить ресурсы OpenGl
+*/
+//---
+void RenderView::CleanUpGl()
+{
+  if (m_GLprogram != -1)
+  {
+    glDeleteProgram(m_GLprogram);
+    m_GLprogram = -1;
+  }
+  if (m_VAO != -1)
+  {
+    glDeleteVertexArrays(1, &m_VAO);
+    m_VAO = -1;
+  }
+  if (m_VBO != -1)
+  {
+    glDeleteBuffers(1, &m_VBO);
+    m_VBO = -1;
+  }
+  if (m_EBO != -1)
+  {
+    glDeleteBuffers(1, &m_EBO);
+    m_EBO = -1;
+  }
 }
 
 

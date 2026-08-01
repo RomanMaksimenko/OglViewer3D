@@ -29,9 +29,9 @@ struct IModel
   /// Масштабировать
   virtual void Scale(float sx, float sy, float sz) = 0;
   /// Получить вершины для отрисовки
-  virtual std::vector<Vertex> GetVertexes() const = 0;
+  virtual const std::vector<Vertex> GetVertexes() const = 0;
   /// Получить индексы порядка отрисовки вершин
-  virtual std::vector<unsigned int> GetIndices() const = 0;
+  virtual const std::vector<unsigned int> GetIndices() const = 0;
   /// Получить матрицу MVP
   virtual Matrix4f GetMVPMatrix() const = 0;
 };

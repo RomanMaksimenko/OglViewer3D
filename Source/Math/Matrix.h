@@ -8,6 +8,9 @@
 
 struct Vertex
 {
+  float x;
+  float y;
+  float z;
 };
 
 class Matrix4f

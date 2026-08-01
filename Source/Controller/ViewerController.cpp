@@ -121,7 +121,7 @@ void ViewerController::ScaleModel(Scaling scale)
 //---
 std::vector<Vertex> ViewerController::GetVertexes() const
 {
-  return {};
+  return m_model->GetVertexes();
 }
 
 
@@ -132,7 +132,7 @@ std::vector<Vertex> ViewerController::GetVertexes() const
 //---
 std::vector<unsigned int> ViewerController::GetIndices() const
 {
-  return {};
+  return m_model->GetIndices();
 }
 
 

@@ -19,7 +19,7 @@ class Model final : public IModel
   std::vector<unsigned int> m_indices;
 
 public:
-  Model() = default;
+  Model();
   ~Model() = default;
 
   /// Переместить модель
@@ -29,9 +29,9 @@ public:
   /// Масштабировать
   virtual void Scale(float sx, float sy, float sz) override;
   /// Получить вершины для отрисовки
-  virtual std::vector<Vertex> GetVertexes() const override;
+  virtual const std::vector<Vertex> GetVertexes() const override;
   /// Получить индексы порядка отрисовки вершин
-  virtual std::vector<unsigned int> GetIndices() const override;
+  virtual const std::vector<unsigned int> GetIndices() const override;
   /// Получить матрицу MVP
   virtual Matrix4f GetMVPMatrix() const override;
 };

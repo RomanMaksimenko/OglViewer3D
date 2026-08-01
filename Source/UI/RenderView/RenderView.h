@@ -26,13 +26,14 @@ class RenderView : public QOpenGLWidget,
 
 private:
   IModelProvider * m_modelProvider = nullptr;
-  GLuint VAO;
-  GLuint VBO;
-  GLuint IBO;
-  GLuint shaderProgram;
+  GLuint m_VAO;
+  GLuint m_VBO;
+  GLuint m_EBO;
+  GLuint m_GLprogram;
 
 public:
   RenderView(QWidget * parent = nullptr);
+  ~RenderView();
 
   /// IRenderView
   /// Установить проводника модели
@@ -47,5 +48,13 @@ protected:
   virtual void paintGL() override;
   virtual void resizeGL(int w, int h) override;
   virtual void initializeGL() override;
+
+private:
+  /// Создать программу отрисовки
+  void CreateGLProgram();
+  /// Готов ли рендер к отрисовке
+  bool IsReadyToDraw() const;
+  /// Освободить ресурсы OpenGl
+  void CleanUpGl();
 
 };

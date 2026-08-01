@@ -6,9 +6,19 @@
    Переместить модель
 */
 //---
+Model::Model()
+  : m_vertices{{-0.5, -0.5, 0.0}, {-0.5, 0.5, 0.0}, {0.5, 0.5, 0.0}, {0.5, -0.5, 0.0}}
+  , m_indices{0, 1, 2, 2, 3, 0}
+{
+}
+
+//------------------------------------------------------------------------------
+/**
+   Переместить модель
+*/
+//---
 void Model::Translate(float dx, float dy, float dz)
 {
-
 }
 
 
@@ -19,7 +29,6 @@ void Model::Translate(float dx, float dy, float dz)
 //---
 void Model::Rotate(float angleX, float angleY, float angleZ)
 {
-
 }
 
 
@@ -30,7 +39,6 @@ void Model::Rotate(float angleX, float angleY, float angleZ)
 //---
 void Model::Scale(float sx, float sy, float sz)
 {
-
 }
 
 
@@ -39,7 +47,7 @@ void Model::Scale(float sx, float sy, float sz)
    Получить вершины для отрисовки
 */
 //---
-std::vector<Vertex> Model::GetVertexes() const
+const std::vector<Vertex> Model::GetVertexes() const
 {
   return m_vertices;
 }
@@ -50,7 +58,7 @@ std::vector<Vertex> Model::GetVertexes() const
     Получить индексы порядка отрисовки вершин
 */
 //---
-std::vector<unsigned int> Model::GetIndices() const
+const std::vector<unsigned int> Model::GetIndices() const
 {
   return m_indices;
 }
