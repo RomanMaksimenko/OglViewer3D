@@ -24,7 +24,7 @@ target_include_directories(UI PUBLIC
 
 # target UI зависит от Qt и OpenGL
 target_link_libraries(UI PUBLIC Qt6::Core Qt6::Widgets Qt6::OpenGLWidgets OpenGL::GL
-                         PRIVATE Qt6::Gui)
+                         PRIVATE Qt6::Gui GLEW::GLEW)
 
 
 

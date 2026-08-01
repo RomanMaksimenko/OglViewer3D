@@ -5,9 +5,10 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
+#include <GL/glew.h>
+#include <GL/GL.h>
 
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
 
 #include "UI/IRenderView.h"
 
@@ -19,13 +20,16 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 class RenderView : public QOpenGLWidget,
-                   protected QOpenGLFunctions,
                    public IRenderView
 {
   Q_OBJECT
 
 private:
   IModelProvider * m_modelProvider = nullptr;
+  GLuint VAO;
+  GLuint VBO;
+  GLuint IBO;
+  GLuint shaderProgram;
 
 public:
   RenderView(QWidget * parent = nullptr);
@@ -43,4 +47,5 @@ protected:
   virtual void paintGL() override;
   virtual void resizeGL(int w, int h) override;
   virtual void initializeGL() override;
+
 };
