@@ -5,13 +5,11 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
-#include <GL/glew.h>
-#include <GL/GL.h>
-
-#include <QOpenGLWidget>
 
 #include "UI/IRenderView.h"
+#include "UI/RenderView/Mesh.h"
 
+#include <QOpenGLWidget>
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -26,10 +24,8 @@ class RenderView : public QOpenGLWidget,
 
 private:
   IModelProvider * m_modelProvider = nullptr;
-  GLuint m_VAO;
-  GLuint m_VBO;
-  GLuint m_EBO;
   GLuint m_GLprogram;
+  Mesh m_mesh;
 
 public:
   RenderView(QWidget * parent = nullptr);
@@ -39,7 +35,7 @@ public:
   /// Установить проводника модели
   virtual void SetModelProvider(IModelProvider * modelProvider) override;
   /// Отрисовать сцену
-  virtual void RenderScene() override; 
+  virtual void RenderScene() override;
   /// Выдать указатель на себя как на QWidget
   virtual QWidget * widget() override;
 
@@ -51,10 +47,9 @@ protected:
 
 private:
   /// Создать программу отрисовки
-  void CreateGLProgram();
+  void CreateProgram();
   /// Готов ли рендер к отрисовке
   bool IsReadyToDraw() const;
   /// Освободить ресурсы OpenGl
   void CleanUpGl();
-
 };

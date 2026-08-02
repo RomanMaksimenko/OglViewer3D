@@ -29,10 +29,7 @@ const GLchar * fragmentShaderSource = "#version 330 core\n"
 //---
 RenderView::RenderView(QWidget * parent)
   : QOpenGLWidget(parent)
-  , m_VAO(-1)
-  , m_VBO(-1)
-  , m_EBO(-1)
-  , m_GLprogram(-1)
+  , m_GLprogram(0)
 {
   if (parent)
   {
@@ -47,7 +44,14 @@ RenderView::RenderView(QWidget * parent)
 //---
 RenderView::~RenderView()
 {
-  CleanUpGl();
+  // Если контекст OpenGl существует
+  if (isValid())
+  { // Делаем контекст OpenGl текущим
+    makeCurrent();
+    CleanUpGl();
+    // Завершаем работу с контекстом
+    doneCurrent();
+  }
 }
 
 
@@ -58,8 +62,21 @@ RenderView::~RenderView()
 //---
 void RenderView::SetModelProvider(IModelProvider * modelProvider)
 {
-  m_modelProvider = modelProvider;
-  CreateGLProgram();
+  m_modelProvider = modelProvider; 
+  // Если контекст OpenGl существует
+  if (isValid())
+  {
+    // Делаем контекст OpenGl текущим
+    makeCurrent();
+    CleanUpGl();
+    if (m_modelProvider)
+    {
+      m_mesh.Create(m_modelProvider->GetVertexes(), m_modelProvider->GetIndices());
+      CreateProgram();
+    }
+    // Завершаем работу с контекстом
+    doneCurrent();
+  }
 }
 
 
@@ -70,7 +87,8 @@ void RenderView::SetModelProvider(IModelProvider * modelProvider)
 //---
 void RenderView::RenderScene()
 {
-  paintGL();
+  // Запрашиваем перерисовку
+  update();
 }
 
 
@@ -96,8 +114,8 @@ void RenderView::paintGL()
   if (IsReadyToDraw())
   {
     glUseProgram(m_GLprogram);
-    glBindVertexArray(m_VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(m_mesh.VAO());
+    glDrawElements(GL_TRIANGLES, m_mesh.IndexCount(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
   }
 }
@@ -127,7 +145,6 @@ void RenderView::initializeGL()
   {
     std::cerr << "Failed to initialize GLEW\n";
   }
-
   glClearColor(0.0, 0.0, 0.0, 1.0);
 }
 
@@ -137,45 +154,29 @@ void RenderView::initializeGL()
    Создать программу отрисовки
 */
 //---
-void RenderView::CreateGLProgram()
+void RenderView::CreateProgram()
 {
   if (!m_modelProvider)
     return;
 
-  if (m_GLprogram == -1)
-  {
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &Shaders::vertexShaderSource, 0);
-    glCompileShader(vertexShader);
+  // Создадим и скомпилируем шейдеры
+  GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  glShaderSource(vertexShader, 1, &Shaders::vertexShaderSource, nullptr);
+  glCompileShader(vertexShader);
 
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &Shaders::fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
+  GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+  glShaderSource(fragmentShader, 1, &Shaders::fragmentShaderSource, nullptr);
+  glCompileShader(fragmentShader);
 
-    m_GLprogram = glCreateProgram();
-    glAttachShader(m_GLprogram, vertexShader);
-    glAttachShader(m_GLprogram, fragmentShader);
-    glLinkProgram(m_GLprogram);
+  // Линкуем OpenGl программу
+  m_GLprogram = glCreateProgram();
+  glAttachShader(m_GLprogram, vertexShader);
+  glAttachShader(m_GLprogram, fragmentShader);
+  glLinkProgram(m_GLprogram);
 
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-  }
-
-  auto vertices = m_modelProvider->GetVertexes();
-  auto indices = m_modelProvider->GetIndices();
-
-  glGenVertexArrays(1, &m_VAO);
-  glBindVertexArray(m_VAO);
-
-  glGenBuffers(1, &m_VBO);
-  glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-  glEnableVertexAttribArray(0);
-
-  glGenBuffers(1, &m_EBO);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+  // Освободим ресурсы, шейдеры больше не нужны
+  glDeleteShader(vertexShader);
+  glDeleteShader(fragmentShader);
 }
 
 
@@ -186,7 +187,7 @@ void RenderView::CreateGLProgram()
 //---
 bool RenderView::IsReadyToDraw() const
 {
-  return m_GLprogram != -1 && m_VAO != -1;
+  return m_GLprogram != 0 && m_mesh.VAO() != 0;
 }
 
 
@@ -197,26 +198,12 @@ bool RenderView::IsReadyToDraw() const
 //---
 void RenderView::CleanUpGl()
 {
-  if (m_GLprogram != -1)
+  if (m_GLprogram)
   {
     glDeleteProgram(m_GLprogram);
-    m_GLprogram = -1;
+    m_GLprogram = 0;
   }
-  if (m_VAO != -1)
-  {
-    glDeleteVertexArrays(1, &m_VAO);
-    m_VAO = -1;
-  }
-  if (m_VBO != -1)
-  {
-    glDeleteBuffers(1, &m_VBO);
-    m_VBO = -1;
-  }
-  if (m_EBO != -1)
-  {
-    glDeleteBuffers(1, &m_EBO);
-    m_EBO = -1;
-  }
+  m_mesh.Destroy();
 }
 
 

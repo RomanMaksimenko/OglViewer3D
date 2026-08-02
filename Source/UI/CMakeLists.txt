@@ -3,6 +3,7 @@
 set(UI_PRIVATE_SOURCES
     "ControlButtonsView/ControlButtonsView.cpp"
     "RenderView/RenderView.cpp"
+    "RenderView/Mesh.cpp"
     "ViewMainWindow/ViewMainWindow.cpp"
     "ViewFactory/ViewFactory.cpp"
 )

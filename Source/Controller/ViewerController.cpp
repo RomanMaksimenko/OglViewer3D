@@ -12,15 +12,7 @@ namespace
 constexpr double delta = 0.05;
 } // namespace
 
-struct View : public IView
-{
-  /// Установить подписчика на события представления
-  virtual void SetViewObserver(IViewObserver * observer) {}
-  /// Установить проводника модели
-  virtual void SetModelProvider(IModelProvider * modelProvider) {}
-  /// Отрисовать сцену
-  virtual void RenderScene() {}
-};
+
 //------------------------------------------------------------------------------
 /**
 */
