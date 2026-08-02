@@ -5,6 +5,7 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
+
 #include <GL/glew.h>
 #include <GL/GL.h>
 
@@ -19,6 +20,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 class Mesh
 {
+private:
+  GLuint m_VAO = 0;
+  GLuint m_VBO = 0;
+  GLuint m_EBO = 0;
+  size_t m_indexCount = 0;
+
 public:
   Mesh() = default;
   ~Mesh();
@@ -31,9 +38,4 @@ public:
   // Выдать количество индексов
   size_t IndexCount() const { return m_indexCount; }
 
-private:
-  GLuint m_VAO = 0;
-  GLuint m_VBO = 0;
-  GLuint m_EBO = 0;
-  size_t m_indexCount = 0;
 };

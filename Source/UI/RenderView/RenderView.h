@@ -8,6 +8,7 @@
 
 #include "UI/IRenderView.h"
 #include "UI/RenderView/Mesh.h"
+#include "UI/RenderView/ShaderProgram.h"
 
 #include <QOpenGLWidget>
 
@@ -24,7 +25,7 @@ class RenderView : public QOpenGLWidget,
 
 private:
   IModelProvider * m_modelProvider = nullptr;
-  GLuint m_GLprogram;
+  ShaderProgram m_GLprogram;
   Mesh m_mesh;
 
 public:
@@ -46,8 +47,6 @@ protected:
   virtual void initializeGL() override;
 
 private:
-  /// Создать программу отрисовки
-  void CreateProgram();
   /// Готов ли рендер к отрисовке
   bool IsReadyToDraw() const;
   /// Освободить ресурсы OpenGl
