@@ -6,7 +6,9 @@ target_include_directories(OGL3dViewer PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(OGL3dViewer PRIVATE Qt6::Core UI Controller Math Model)
+
+
+target_link_libraries(OGL3dViewer PRIVATE Qt6::Core Core UI Controller Math Model)
 
 # Добавим необходимые Qt dll рядом с исполняемым файлом
 find_program(WINDEPLOYQT_BIN windeployqt6

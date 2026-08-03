@@ -1,21 +1,8 @@
 ﻿#include "ShaderProgram.h"
 
-namespace Shaders
-{
-const GLchar * vertexShaderSource = "#version 330 core\n"
-                                    "layout (location = 0) in vec3 position;\n"
-                                    "void main()\n"
-                                    "{\n"
-                                    "gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-                                    "}\0";
-const GLchar * fragmentShaderSource = "#version 330 core\n"
-                                      "out vec4 color;\n"
-                                      "void main()\n"
-                                      "{\n"
-                                      "color = vec4(1.0, 0.0, 0.0, 1.0);\n"
-                                      "}\n\0";
+#include <Core/RW/RWUtils.h>
+#include "UI/RenderView/Shader.h"
 
-} // namespace Shaders
 
 //------------------------------------------------------------------------------
 /**
@@ -37,23 +24,28 @@ void ShaderProgram::Create()
 {
   Destroy();
   // Создадим и скомпилируем шейдеры
-  GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &Shaders::vertexShaderSource, nullptr);
-  glCompileShader(vertexShader);
+  auto vertexShaderSource = ReadFile(std::filesystem::path(SHADER_DIR) / "VertexShader.txt");
+  if (vertexShaderSource.empty())
+  {
+    return;// TODO обработка ошибок
+  }
+  Shader vertexShader(GL_VERTEX_SHADER, vertexShaderSource);
+  vertexShader.Compile();
 
-  GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &Shaders::fragmentShaderSource, nullptr);
-  glCompileShader(fragmentShader);
+  auto fragmentShaderSource = ReadFile(std::filesystem::path(SHADER_DIR) / "FragmentShader.txt");
+  if (fragmentShaderSource.empty())
+  {
+    return;// TODO обработка ошибок
+  }
+  Shader fragmentShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+  fragmentShader.Compile();
 
   // Линкуем OpenGl программу
   m_program = glCreateProgram();
-  glAttachShader(m_program, vertexShader);
-  glAttachShader(m_program, fragmentShader);
+  glAttachShader(m_program, vertexShader.GetShaderObj());
+  glAttachShader(m_program, fragmentShader.GetShaderObj());
   glLinkProgram(m_program);
 
-  // Освободим ресурсы, шейдеры больше не нужны
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
 }
 
 
