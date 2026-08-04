@@ -1,9 +1,54 @@
 ﻿#include "Mesh.h"
+#include <GL/GL.h>
+
+//------------------------------------------------------------------------------
+/**
+   Конструктор перемещения
+*/
+//---
+Mesh::Mesh(Mesh && other) noexcept
+  : m_VAO(other.m_VAO)
+  , m_VBO(other.m_VBO)
+  , m_EBO(other.m_EBO)
+  , m_indexCount(other.m_indexCount)
+{
+  other.m_VAO = 0;
+  other.m_VBO = 0;
+  other.m_EBO = 0;
+  other.m_indexCount = 0;
+}
 
 
+//------------------------------------------------------------------------------
+/**
+   
+*/
+//---
 Mesh::~Mesh()
 {
   Destroy();
+}
+
+ 
+//------------------------------------------------------------------------------
+/**
+   Оператор перемещения
+*/
+//---
+Mesh & Mesh::operator=(Mesh && other) noexcept
+{
+    if (this != &other)
+    {
+      m_VAO = other.m_VAO;
+      m_VBO = other.m_VBO;
+      m_EBO = other.m_EBO;
+      m_indexCount = other.m_indexCount;
+      other.m_VAO = 0;
+      other.m_VBO = 0;
+      other.m_EBO = 0;
+      other.m_indexCount = 0;
+  }
+    return *this;
 }
 
 //------------------------------------------------------------------------------

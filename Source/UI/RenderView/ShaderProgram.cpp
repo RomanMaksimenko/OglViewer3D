@@ -1,17 +1,46 @@
 ﻿#include "ShaderProgram.h"
 
 #include <Core/RW/RWUtils.h>
+
 #include "UI/RenderView/Shader.h"
 
 
 //------------------------------------------------------------------------------
 /**
-   Создать Mesh
+   Конструктор перемещения
+*/
+//---
+ShaderProgram::ShaderProgram(ShaderProgram && other) noexcept
+  : m_program(other.m_program)
+{
+  other.m_program = 0;
+}
+
+//------------------------------------------------------------------------------
+/**
+   
 */
 //---
 ShaderProgram::~ShaderProgram()
 {
   Destroy();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Оператор перемещения
+*/
+//---
+ShaderProgram & ShaderProgram::operator=(ShaderProgram && other) noexcept
+{
+  if (this != &other)
+  {
+    Destroy();
+    m_program = other.m_program;
+    other.m_program = 0;
+  }
+  return *this;
 }
 
 
@@ -27,7 +56,7 @@ void ShaderProgram::Create()
   auto vertexShaderSource = ReadFile(std::filesystem::path(SHADER_DIR) / "VertexShader.txt");
   if (vertexShaderSource.empty())
   {
-    return;// TODO обработка ошибок
+    return; // TODO обработка ошибок
   }
   Shader vertexShader(GL_VERTEX_SHADER, vertexShaderSource);
   vertexShader.Compile();
@@ -35,7 +64,7 @@ void ShaderProgram::Create()
   auto fragmentShaderSource = ReadFile(std::filesystem::path(SHADER_DIR) / "FragmentShader.txt");
   if (fragmentShaderSource.empty())
   {
-    return;// TODO обработка ошибок
+    return; // TODO обработка ошибок
   }
   Shader fragmentShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
   fragmentShader.Compile();
@@ -46,6 +75,9 @@ void ShaderProgram::Create()
   glAttachShader(m_program, fragmentShader.GetShaderObj());
   glLinkProgram(m_program);
 
+   // Отсоединяем после успешной линковки
+  glDetachShader(m_program, vertexShader.GetShaderObj());
+  glDetachShader(m_program, fragmentShader.GetShaderObj());
 }
 
 
@@ -56,9 +88,6 @@ void ShaderProgram::Create()
 //---
 void ShaderProgram::Destroy()
 {
-  if (m_program)
-  {
-    glDeleteProgram(m_program);
-    m_program = 0;
-  }
+  glDeleteProgram(m_program);
+  m_program = 0;
 }

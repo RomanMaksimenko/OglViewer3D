@@ -23,7 +23,16 @@ private:
 
 public:
   ShaderProgram() = default;
+  // Конструктор копирования
+  ShaderProgram(const ShaderProgram &) = delete;
+  // Конструктор перемещения
+  ShaderProgram(ShaderProgram && other) noexcept;
   ~ShaderProgram();
+
+  // Оператор копирования
+  ShaderProgram & operator=(const ShaderProgram &) = delete;
+  // Оператор перемещения
+  ShaderProgram & operator=(ShaderProgram && other) noexcept;
 
   // Создать программу
   void Create();

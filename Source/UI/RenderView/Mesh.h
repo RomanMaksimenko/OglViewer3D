@@ -7,7 +7,6 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <GL/GL.h>
 
 #include "Controller/IModelProvider.h"
 
@@ -28,7 +27,17 @@ private:
 
 public:
   Mesh() = default;
+  // Конструктор копирования
+  Mesh(const Mesh &) = delete;
+  // Конструктор перемещения
+  Mesh(Mesh && other) noexcept;
   ~Mesh();
+
+  // Оператор присваивания
+  Mesh & operator=(const Mesh &) = delete;
+  // Оператор перемещения
+  Mesh & operator=(Mesh &&) noexcept;
+
   // Создать Mesh
   void Create(const std::vector<Vertex> & vertices, const std::vector<unsigned int> & indices);
   // Освободить занятые ресурсы
@@ -37,5 +46,4 @@ public:
   GLuint VAO() const { return m_VAO; }
   // Выдать количество индексов
   size_t IndexCount() const { return m_indexCount; }
-
 };
