@@ -49,11 +49,11 @@ jobs:
         run: choco install ninja -y
         shell: pwsh
         
-      - name: Get vcpkg registry baseline
+      - name: Inspect vcpkg
         run: |
-          cd "%VCPKG_ROOT%"
-          git rev-parse HEAD
-          git rev-parse HEAD:ports
+           echo VCPKG_ROOT=%VCPKG_ROOT%
+           "%VCPKG_ROOT%\vcpkg.exe" version
+           "%VCPKG_ROOT%\vcpkg.exe" help x-update-baseline
         shell: cmd
        
       # ------------------------------------------------------------
