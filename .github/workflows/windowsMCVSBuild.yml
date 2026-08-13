@@ -31,6 +31,11 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: x64
+        
+     - name: Install GLEW
+       run: |
+       vcpkg install glew:x64-windows
+       shell: cmd
 
     # Устанавливаем Ninja (он уже есть в runner, но на всякий случай)
     - name: Install Ninja
@@ -40,7 +45,11 @@ jobs:
     # Используем Ninja вместо Visual Studio
     - name: Configure with Ninja
       run: |
-        cmake -B %BUILD_DIR% -G "Ninja" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DCMAKE_PREFIX_PATH="%Qt6_DIR%"
+        cmake -B "%BUILD_DIR%" ^
+            -G "Ninja" ^
+            -DCMAKE_BUILD_TYPE="%BUILD_TYPE%" ^
+            -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" ^
+            -DVCPKG_TARGET_TRIPLET=x64-windows
       shell: cmd
       env:
         BUILD_DIR: ${{ env.BUILD_DIR }}
