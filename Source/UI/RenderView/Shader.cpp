@@ -1,8 +1,9 @@
 ﻿#include "Shader.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 
+#include "Core/Exceptions/ShaderException.h"
 
 //------------------------------------------------------------------------------
 /**
@@ -14,6 +15,7 @@ Shader::Shader(GLuint type, const std::string & source)
   , m_obj(0)
   , m_shaderSource(source)
 {
+  Compile();
 }
 
 
@@ -59,33 +61,55 @@ Shader & Shader::operator=(Shader && other) noexcept
 }
 
 
+namespace
+{
+//------------------------------------------------------------------------------
+/**
+   Получить строковое представление типа шейдера
+*/
+//---
+std::string ShaderTypeToString(GLuint shaderType)
+{
+  switch (shaderType)
+  {
+    case GL_VERTEX_SHADER:
+      return std::string("Vertex shader");
+    case GL_FRAGMENT_SHADER:
+      return std::string("Fragment shader");
+  }
+  return {};
+}
+} // namespace
+
+
 //------------------------------------------------------------------------------
 /**
    Компиляция шейдера
 */
 //---
-bool Shader::Compile()
+void Shader::Compile()
 {
   DeleteShader();
-
-  if (m_shaderSource.empty())
-    return false;
 
   m_obj = glCreateShader(m_Type);
   auto * src = m_shaderSource.c_str();
   glShaderSource(m_obj, 1, &src, nullptr);
   glCompileShader(m_obj);
 
-  int success;
-  char infoLog[512];
+  GLint success;
   glGetShaderiv(m_obj, GL_COMPILE_STATUS, &success);
-  if (!success)
+  if (success != GL_TRUE)
   {
-    glGetShaderInfoLog(m_obj, 512, nullptr, infoLog);
-    std::cerr << "Shader compilation failed:\n" << infoLog << std::endl;
-    return false;
+    GLint logLength = 0;
+    glGetShaderiv(m_obj, GL_INFO_LOG_LENGTH, &logLength);
+    std::string infoLog;
+    if (logLength > 0)
+    {
+      infoLog.resize(logLength);
+      glGetShaderInfoLog(m_obj, logLength, nullptr, infoLog.data());
+    }
+    throw ShaderException("Failed to compile " + ShaderTypeToString(m_Type) + infoLog);
   }
-  return true;
 }
 
 

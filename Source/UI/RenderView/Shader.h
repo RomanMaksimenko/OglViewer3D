@@ -35,12 +35,13 @@ public:
   // Оператор перемещения
   Shader & operator=(Shader &&) noexcept;
 
-  /// Компиляция шейдера
-  bool Compile();
+
   /// Выдать идентификатор шейдера
   GLuint GetShaderObj() const { return m_obj; }
 
-private:
+private: 
+  /// Компиляция шейдера
+  void Compile();
   /// Освободить ресурсы
   void DeleteShader();
 };
