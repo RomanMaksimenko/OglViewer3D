@@ -43,34 +43,6 @@ jobs:
           arch: x64
 
       # ------------------------------------------------------------
-      # GLEW
-      # ------------------------------------------------------------
-      - name: Install GLEW
-        run: |
-          "%VCPKG_ROOT%\vcpkg.exe" install glew:x64-windows
-        shell: cmd
-
-      # ------------------------------------------------------------
-      # Check GLEW
-      # ------------------------------------------------------------
-      - name: Check GLEW installation
-        run: |
-          echo VCPKG_ROOT=%VCPKG_ROOT%
-
-          echo === VCPKG ===
-          "%VCPKG_ROOT%\vcpkg.exe" version
-
-          echo === GLEW package ===
-          "%VCPKG_ROOT%\vcpkg.exe" list | findstr glew
-
-          echo === GLEW headers ===
-          dir "%VCPKG_ROOT%\installed\x64-windows\include\GL\glew.h"
-
-          echo === GLEW library ===
-          dir "%VCPKG_ROOT%\installed\x64-windows\lib\glew32.lib"
-        shell: cmd
-
-      # ------------------------------------------------------------
       # Ninja
       # ------------------------------------------------------------
       - name: Install Ninja
