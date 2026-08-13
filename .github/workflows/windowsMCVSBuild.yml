@@ -44,7 +44,7 @@ jobs:
 
     # Используем Ninja вместо Visual Studio
     - name: Configure with Ninja
-        run: >
+      run: >
           cmake -B "%BUILD_DIR%"
           -G "Ninja"
           -DCMAKE_BUILD_TYPE="%BUILD_TYPE%"
