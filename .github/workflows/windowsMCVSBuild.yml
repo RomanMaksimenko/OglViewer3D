@@ -45,10 +45,10 @@ jobs:
     # Используем Ninja вместо Visual Studio
     - name: Configure with Ninja
       run: |
-        cmake -B "%BUILD_DIR%" ^
-            -G "Ninja" ^
-            -DCMAKE_BUILD_TYPE="%BUILD_TYPE%" ^
-            -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" ^
+        cmake -B "%BUILD_DIR%"
+            -G "Ninja"
+            -DCMAKE_BUILD_TYPE="%BUILD_TYPE%"
+            -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake"
             -DVCPKG_TARGET_TRIPLET=x64-windows
       shell: cmd
       env:
