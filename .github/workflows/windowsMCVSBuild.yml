@@ -7,74 +7,97 @@ env:
   QT_VERSION: 6.8.1
   BUILD_TYPE: Release
   BUILD_DIR: ${{ github.workspace }}/build
+  VCPKG_ROOT: C:\vcpkg
 
 jobs:
   build:
     runs-on: windows-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: 'recursive'
+      # ------------------------------------------------------------
+      # Checkout
+      # ------------------------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: ${{ env.QT_VERSION }}
-        host: windows
-        target: desktop
-        arch: win64_msvc2022_64
-        cache: true
+      # ------------------------------------------------------------
+      # Qt
+      # ------------------------------------------------------------
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: windows
+          target: desktop
+          arch: win64_msvc2022_64
+          cache: true
 
-    - name: Setup MSVC environment
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: x64
-        
-    - name: Install GLEW
-      run: |
-        vcpkg install glew:x64-windows
-        vcpkg integrate install
-      shell: cmd
-      
-      # Check GLEW installation
+      # ------------------------------------------------------------
+      # MSVC
+      # ------------------------------------------------------------
+      - name: Setup MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
 
-    - name: Check GLEW installation
-      run: |
+      # ------------------------------------------------------------
+      # GLEW
+      # ------------------------------------------------------------
+      - name: Install GLEW
+        run: |
+          "%VCPKG_ROOT%\vcpkg.exe" install glew:x64-windows
+        shell: cmd
+
+      # ------------------------------------------------------------
+      # Check GLEW
+      # ------------------------------------------------------------
+      - name: Check GLEW installation
+        run: |
           echo VCPKG_ROOT=%VCPKG_ROOT%
 
+          echo === VCPKG ===
+          "%VCPKG_ROOT%\vcpkg.exe" version
+
           echo === GLEW package ===
-          vcpkg list | findstr glew
+          "%VCPKG_ROOT%\vcpkg.exe" list | findstr glew
 
           echo === GLEW headers ===
           dir "%VCPKG_ROOT%\installed\x64-windows\include\GL\glew.h"
 
           echo === GLEW library ===
           dir "%VCPKG_ROOT%\installed\x64-windows\lib\glew32.lib"
-          
-    # Устанавливаем Ninja (он уже есть в runner, но на всякий случай)
-    - name: Install Ninja
-      run: choco install ninja -y
-      shell: pwsh
+        shell: cmd
 
-    # Используем Ninja вместо Visual Studio
-    - name: Configure with Ninja
-      run: >
+      # ------------------------------------------------------------
+      # Ninja
+      # ------------------------------------------------------------
+      - name: Install Ninja
+        run: choco install ninja -y
+        shell: pwsh
+
+      # ------------------------------------------------------------
+      # Configure
+      # ------------------------------------------------------------
+      - name: Configure with Ninja
+        run: >
           cmake -B "%BUILD_DIR%"
           -G "Ninja"
           -DCMAKE_BUILD_TYPE="%BUILD_TYPE%"
           -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake"
           -DVCPKG_TARGET_TRIPLET=x64-windows
-      shell: cmd
-      env:
+        shell: cmd
+        env:
           BUILD_DIR: ${{ env.BUILD_DIR }}
           BUILD_TYPE: ${{ env.BUILD_TYPE }}
 
-    - name: Build with Ninja
-      run: |
-        cmake --build %BUILD_DIR% --config %BUILD_TYPE%
-      shell: cmd
-      env:
-        BUILD_DIR: ${{ env.BUILD_DIR }}
-        BUILD_TYPE: ${{ env.BUILD_TYPE }}
+      # ------------------------------------------------------------
+      # Build
+      # ------------------------------------------------------------
+      - name: Build with Ninja
+        run: |
+          cmake --build "%BUILD_DIR%"
+        shell: cmd
+        env:
+          BUILD_DIR: ${{ env.BUILD_DIR }}
