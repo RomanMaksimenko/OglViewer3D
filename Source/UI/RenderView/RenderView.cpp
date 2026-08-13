@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Controller/IModelProvider.h"
+#include "Core/Exceptions/ApplicationException.h"
 
 
 //------------------------------------------------------------------------------
@@ -124,7 +125,7 @@ void RenderView::initializeGL()
   auto err = glewInit();
   if (err != GLEW_OK)
   {
-    std::cerr << "Failed to initialize GLEW\n";
+    throw ApplicationException("Failed to initialize GLEW\n");
   }
   glClearColor(0.0, 0.0, 0.0, 1.0);
 }
