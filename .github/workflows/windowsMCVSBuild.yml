@@ -37,7 +37,22 @@ jobs:
         vcpkg install glew:x64-windows
         vcpkg integrate install
       shell: cmd
+      
+      # Check GLEW installation
 
+    - name: Check GLEW installation
+      run: |
+          echo VCPKG_ROOT=%VCPKG_ROOT%
+
+          echo === GLEW package ===
+          vcpkg list | findstr glew
+
+          echo === GLEW headers ===
+          dir "%VCPKG_ROOT%\installed\x64-windows\include\GL\glew.h"
+
+          echo === GLEW library ===
+          dir "%VCPKG_ROOT%\installed\x64-windows\lib\glew32.lib"
+          
     # Устанавливаем Ninja (он уже есть в runner, но на всякий случай)
     - name: Install Ninja
       run: choco install ninja -y
