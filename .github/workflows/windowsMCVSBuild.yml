@@ -32,10 +32,10 @@ jobs:
       with:
         arch: x64
         
-     - name: Install GLEW
-       run: |
+    - name: Install GLEW
+      run: |
         vcpkg install glew:x64-windows
-       shell: cmd
+      shell: cmd
 
     # Устанавливаем Ninja (он уже есть в runner, но на всякий случай)
     - name: Install Ninja
@@ -50,8 +50,8 @@ jobs:
           -DCMAKE_BUILD_TYPE="%BUILD_TYPE%"
           -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake"
           -DVCPKG_TARGET_TRIPLET=x64-windows
-        shell: cmd
-        env:
+      shell: cmd
+      env:
           BUILD_DIR: ${{ env.BUILD_DIR }}
           BUILD_TYPE: ${{ env.BUILD_TYPE }}
 
