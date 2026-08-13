@@ -35,6 +35,7 @@ jobs:
     - name: Install GLEW
       run: |
         vcpkg install glew:x64-windows
+        vcpkg integrate install
       shell: cmd
 
     # Устанавливаем Ninja (он уже есть в runner, но на всякий случай)
