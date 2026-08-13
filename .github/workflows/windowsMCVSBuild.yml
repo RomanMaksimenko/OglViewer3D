@@ -49,11 +49,9 @@ jobs:
         run: choco install ninja -y
         shell: pwsh
         
-      - name: Inspect vcpkg
+      - name: Initialize vcpkg baseline
         run: |
-           echo VCPKG_ROOT=%VCPKG_ROOT%
-           "%VCPKG_ROOT%\vcpkg.exe" version
-           "%VCPKG_ROOT%\vcpkg.exe" help x-update-baseline
+         "%VCPKG_ROOT%\vcpkg.exe" x-update-baseline --add-initial-baseline
         shell: cmd
        
       # ------------------------------------------------------------
