@@ -1,5 +1,6 @@
 ﻿#include "Model.h"
 
+#include <Math/AxisAlignedBoundedBox.h>
 
 //------------------------------------------------------------------------------
 /**
@@ -9,8 +10,11 @@
 Model::Model()
   : m_vertices{{-0.5, -0.5, 0.0}, {-0.5, 0.5, 0.0}, {0.5, 0.5, 0.0}, {0.5, -0.5, 0.0}}
   , m_indices{0, 1, 2, 2, 3, 0}
+  , m_boundedBox(CalculateBoundedBox(m_vertices))
+  , m_transform(Matrix4f::Identity())
 {
 }
+
 
 //------------------------------------------------------------------------------
 /**
@@ -19,6 +23,9 @@ Model::Model()
 //---
 void Model::Translate(float dx, float dy, float dz)
 {
+  m_transform[0][3] += dx;
+  m_transform[1][3] += dy;
+  m_transform[2][3] += dz;
 }
 
 
@@ -47,7 +54,7 @@ void Model::Scale(float sx, float sy, float sz)
    Получить вершины для отрисовки
 */
 //---
-const std::vector<Vertex> Model::GetVertexes() const
+const std::vector<Vertex> & Model::GetVertices() const
 {
   return m_vertices;
 }
@@ -58,7 +65,7 @@ const std::vector<Vertex> Model::GetVertexes() const
     Получить индексы порядка отрисовки вершин
 */
 //---
-const std::vector<unsigned int> Model::GetIndices() const
+const std::vector<unsigned int> & Model::GetIndices() const
 {
   return m_indices;
 }
@@ -66,10 +73,21 @@ const std::vector<unsigned int> Model::GetIndices() const
 
 //------------------------------------------------------------------------------
 /**
-    Получить индексы порядка отрисовки вершин
+    Получить матрицу трансформации
 */
 //---
-Matrix4f Model::GetMVPMatrix() const
+Matrix4f Model::GetTransformMatrix() const
 {
-  return {};
+  return m_transform;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+    Получить ограничивающий объем модели
+*/
+//---
+const AxisAlignedBoundedBox & Model::GetBoundedBox() const
+{
+  return m_boundedBox;
 }

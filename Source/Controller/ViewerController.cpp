@@ -4,7 +4,9 @@
 
 #include "IModelService.h"
 #include "IViewFactory.h"
+#include "Math/Vector3f.h"
 #include "UI/IView.h"
+#include "UI/VisibleRect.h"
 
 namespace
 {
@@ -29,6 +31,24 @@ ViewerController::ViewerController(IViewFactory & viewFactory)
 ViewerController::~ViewerController() = default;
 
 
+namespace
+{
+//------------------------------------------------------------------------------
+/**
+   Проверка, не вышла ли модель за границы видимой области
+*/
+//---
+bool CanTranslateModel(const AxisAlignedBoundedBox & boundedBox, const VisibleRect & visibleRect, const Vector3f & currentDelta,
+                       const Vector3f & delta)
+{
+  auto newMin = boundedBox.Min() + currentDelta + delta;
+  auto newMax = boundedBox.Max() + currentDelta + delta;
+
+  return newMin.x >= visibleRect.left && newMax.x <= visibleRect.right && newMin.y >= visibleRect.bottom &&
+         newMax.y <= visibleRect.top;
+}
+} // namespace
+
 //------------------------------------------------------------------------------
 /**
    Обработка события движение модели
@@ -39,25 +59,39 @@ void ViewerController::MoveModel(Direction dir)
   if (!m_model || !m_view)
     return;
 
+  // Границы модели
+  auto AABB = m_model->GetBoundedBox();
+  // Границы видимой области
+  auto visibleRect = m_view->GetVisibleRect();
+  // Текущие значения трансформации модели
+  auto currentTransform = m_model->GetTransformMatrix();
+  auto currentDelta = Vector3f(currentTransform[0][3], currentTransform[1][3], currentTransform[2][3]);
+
   switch (dir)
   {
     case Direction::Left:
-      m_model->Translate(-delta, 0.0, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(-delta, 0.0, 0.0)))
+        m_model->Translate(-delta, 0.0, 0.0);
       break;
     case Direction::Right:
-      m_model->Translate(delta, 0.0, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(delta, 0.0, 0.0)))
+        m_model->Translate(delta, 0.0, 0.0);
       break;
     case Direction::Up:
-      m_model->Translate(0.0, -delta, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, delta, 0.0)))
+        m_model->Translate(0.0, delta, 0.0);
       break;
     case Direction::Down:
-      m_model->Translate(0.0, delta, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, -delta, 0.0)))
+        m_model->Translate(0.0, -delta, 0.0);
       break;
     case Direction::Front:
-      m_model->Translate(0.0, 0.0, -delta);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, -delta)))
+        m_model->Translate(0.0, 0.0, -delta);
       break;
     case Direction::Back:
-      m_model->Translate(0.0, 0.0, delta);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, delta)))
+        m_model->Translate(0.0, 0.0, delta);
       break;
     default:
       break;
@@ -111,9 +145,9 @@ void ViewerController::ScaleModel(Scaling scale)
    Получить вершины для отрисовки
 */
 //---
-std::vector<Vertex> ViewerController::GetVertexes() const
+std::vector<Vertex> ViewerController::GetVertices() const
 {
-  return m_model->GetVertexes();
+  return m_model->GetVertices();
 }
 
 
@@ -135,5 +169,5 @@ std::vector<unsigned int> ViewerController::GetIndices() const
 //---
 Matrix4f ViewerController::GetMVPMatrix() const
 {
-  return {};
+  return m_model->GetTransformMatrix();
 }

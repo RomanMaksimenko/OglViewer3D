@@ -20,6 +20,7 @@ class ShaderProgram
 {
 private:
   GLuint m_program = 0;
+  GLuint m_transformLocation = 0;
 
 public:
   ShaderProgram() = default;
@@ -40,5 +41,7 @@ public:
   void Destroy();
   // Выдать идентификатор программы
   GLuint Id() const { return m_program; }
+  // Выдать идентификатор матрицы трансформации
+  GLuint TransformLocation() const { return m_transformLocation; }
 
 };

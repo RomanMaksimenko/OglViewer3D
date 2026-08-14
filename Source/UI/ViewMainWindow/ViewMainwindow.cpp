@@ -4,8 +4,13 @@
 
 #include "UI/IControlButtonsView.h"
 #include "UI/IRenderView.h"
+#include "UI/VisibleRect.h"
 
 
+//------------------------------------------------------------------------------
+/**
+*/
+//---
 ViewMainWindow::ViewMainWindow(QWidget* parent)
 	: QMainWindow(parent)
 	, m_buttonsView(CreateControlButtonsView(this))
@@ -21,21 +26,48 @@ ViewMainWindow::ViewMainWindow(QWidget* parent)
   show();
 }
 
-  /// Установить подписчика на события представления
+
+//------------------------------------------------------------------------------
+/**
+   Установить подписчика на события представления
+*/
+//---
 void ViewMainWindow::SetViewObserver(IViewObserver* observer)
 {
   m_buttonsView->SetViewObserver(observer);
 }
 
-  /// Установить проводника модели
+
+//------------------------------------------------------------------------------
+/**
+   Установить проводника модели
+*/
+//---
 void ViewMainWindow::SetModelProvider(IModelProvider * modelProvider)
 {
   m_renderView->SetModelProvider(modelProvider);
 }
 
-  /// Отрисовать сцену
+
+//------------------------------------------------------------------------------
+/**
+   Отрисовать сцену
+*/
+//---
 void ViewMainWindow::RenderScene()
 {
   if (m_renderView)
     m_renderView->RenderScene();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Получить размер видимой области
+*/
+//---
+const VisibleRect& ViewMainWindow::GetVisibleRect() const
+{
+  // TODO после перехода к 3D модели добавить сущность камеры, расчет видимой области осуществлять в ней
+  return VisibleRect(-1.0, 1.0, -1.0, 1.0);
 }

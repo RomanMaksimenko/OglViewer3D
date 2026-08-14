@@ -53,7 +53,7 @@ void RenderView::SetModelProvider(IModelProvider * modelProvider)
     CleanUpGl();
     if (m_modelProvider)
     {
-      m_mesh.Create(m_modelProvider->GetVertexes(), m_modelProvider->GetIndices());
+      m_mesh.Create(m_modelProvider->GetVertices(), m_modelProvider->GetIndices());
       m_GLprogram.Create();
     }
     // Завершаем работу с контекстом
@@ -97,6 +97,8 @@ void RenderView::paintGL()
   {
     glUseProgram(m_GLprogram.Id());
     glBindVertexArray(m_mesh.VAO());
+    auto MVP = m_modelProvider->GetMVPMatrix();
+    glUniformMatrix4fv(m_GLprogram.TransformLocation(), 1, GL_TRUE, &MVP[0][0]);
     glDrawElements(GL_TRIANGLES, m_mesh.IndexCount(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
   }

@@ -15,6 +15,7 @@ ShaderProgram::ShaderProgram(ShaderProgram && other) noexcept
   : m_program(other.m_program)
 {
   other.m_program = 0;
+  other.m_transformLocation = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -39,7 +40,9 @@ ShaderProgram & ShaderProgram::operator=(ShaderProgram && other) noexcept
   {
     Destroy();
     m_program = other.m_program;
+    m_transformLocation = other.m_transformLocation;
     other.m_program = 0;
+    other.m_transformLocation = 0;
   }
   return *this;
 }
@@ -82,6 +85,12 @@ void ShaderProgram::Create()
     throw ShaderException("Failed to link shader program: \n" + infoLog);
   }
 
+  m_transformLocation = glGetUniformLocation(m_program, "Transform");
+  if (m_transformLocation == -1)
+  {
+    throw ShaderException("Failed to get uniform Transform location\n");
+  }
+
    // Отсоединяем после успешной линковки
   glDetachShader(m_program, vertexShader.GetShaderObj());
   glDetachShader(m_program, fragmentShader.GetShaderObj());
@@ -97,4 +106,5 @@ void ShaderProgram::Destroy()
 {
   glDeleteProgram(m_program);
   m_program = 0;
+  m_transformLocation = 0;
 }

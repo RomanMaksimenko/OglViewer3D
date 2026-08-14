@@ -11,6 +11,8 @@
 #include "Math/Matrix.h"
 #include "Math/Vertex.h"
 
+class AxisAlignedBoundedBox;
+
 ////////////////////////////////////////////////////////////////////////
 //
 /// Интерфейс модели.
@@ -30,9 +32,11 @@ struct IModel
   /// Масштабировать
   virtual void Scale(float sx, float sy, float sz) = 0;
   /// Получить вершины для отрисовки
-  virtual const std::vector<Vertex> GetVertexes() const = 0;
+  virtual const std::vector<Vertex> & GetVertices() const = 0;
   /// Получить индексы порядка отрисовки вершин
-  virtual const std::vector<unsigned int> GetIndices() const = 0;
-  /// Получить матрицу MVP
-  virtual Matrix4f GetMVPMatrix() const = 0;
+  virtual const std::vector<unsigned int> & GetIndices() const = 0;
+  /// Получить матрицу трансформации
+  virtual Matrix4f GetTransformMatrix() const = 0;
+  /// Получить ограничивающий объем модели
+  virtual const AxisAlignedBoundedBox & GetBoundedBox() const = 0;
 };

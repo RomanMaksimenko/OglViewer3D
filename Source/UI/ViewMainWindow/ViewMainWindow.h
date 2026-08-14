@@ -31,4 +31,6 @@ public:
   virtual void SetModelProvider(IModelProvider * modelProvider) override;
   /// Отрисовать сцену
   virtual void RenderScene() override;
+  /// Получить размер видимой области
+  virtual const VisibleRect & GetVisibleRect() const override;
 };

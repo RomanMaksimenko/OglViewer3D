@@ -13,6 +13,8 @@ set(UI_PUBLIC_HEADERS
     "IControlButtonsView.h"
     "IRenderView.h"
     "ViewFactory/ViewFactory.h"
+    "IView.h"
+    "VisibleRect.h"
 )
 
 target_sources(UI PRIVATE
