@@ -45,7 +45,7 @@ public:
   virtual void ScaleModel(Scaling scale) override;
   /// IModelProvider
   /// Получить вершины для отрисовки
-  virtual std::vector<Vertex> GetVertexes() const;
+  virtual std::vector<Vertex> GetVertices() const;
   /// Получить индексы порядка отрисовки вершин
   virtual std::vector<unsigned int> GetIndices() const;
   /// Получить матрицу MVP

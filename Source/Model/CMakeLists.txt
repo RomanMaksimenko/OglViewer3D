@@ -17,6 +17,8 @@ target_sources(Model PRIVATE
      ${MODEL_PUBLIC_HEADERS}
  )
 
+target_link_libraries(Model PUBLIC Math)
+
 target_include_directories(Model PUBLIC
    ${CMAKE_SOURCE_DIR}/Source
 )
