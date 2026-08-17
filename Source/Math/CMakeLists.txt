@@ -3,12 +3,14 @@ add_library(Math)
 set(MATH_PRIVATE_SOURCES
     "AxisAlignedBoundedBox.cpp"    
     "Matrix.cpp"
+    "MathUtils.cpp"
     "Vector3f.cpp"
 )
 
 set(MATH_PUBLIC_HEADERS
     "AxisAlignedBoundedBox.h"
     "Matrix.h"
+    "MathUtils.h"
     "Vector3f.h"
     "Vertex.h"
 )

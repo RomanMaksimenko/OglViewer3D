@@ -1,6 +1,7 @@
 ﻿#include "Model.h"
 
 #include <Math/AxisAlignedBoundedBox.h>
+#include <Math/MathUtils.h>
 
 //------------------------------------------------------------------------------
 /**
@@ -36,6 +37,27 @@ void Model::Translate(float dx, float dy, float dz)
 //---
 void Model::Rotate(float angleX, float angleY, float angleZ)
 {
+  Matrix4f rx, ry, rz;
+  float x = AngleUtils::ToRadians(angleX);
+  float y = AngleUtils::ToRadians(angleY);
+  float z = AngleUtils::ToRadians(angleZ);
+
+  rx[1][1] = cosf(x);
+  rx[1][2] = -sinf(x);
+  rx[2][1] = sinf(x);
+  rx[2][2] = cosf(x);
+
+  ry[0][0] = cosf(y);
+  ry[0][2] = sinf(y);
+  ry[2][0] = -sinf(y);
+  ry[2][2] = cosf(y);
+
+  rz[0][0] = cosf(z);
+  rz[0][1] = -sinf(z);
+  rz[1][0] = sinf(z);
+  rz[1][1] = cosf(z);
+
+  m_transform = m_transform * rx * ry * rz;
 }
 
 
