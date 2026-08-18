@@ -68,6 +68,9 @@ void Model::Rotate(float angleX, float angleY, float angleZ)
 //---
 void Model::Scale(float sx, float sy, float sz)
 {
+  m_transform[0][0] += sx;
+  m_transform[1][1] += sy;
+  m_transform[2][2] += sz;
 }
 
 

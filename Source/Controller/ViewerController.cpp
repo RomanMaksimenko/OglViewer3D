@@ -135,7 +135,16 @@ void ViewerController::ScaleModel(Scaling scale)
 {
   if (!m_model || !m_view)
     return;
-  m_model->Scale(delta, delta, delta);
+  switch (scale)
+  {
+    case Scaling::INC:
+      m_model->Scale(delta, delta, delta);
+      break;
+    case Scaling::DESC:
+      m_model->Scale(-delta, -delta, -delta);
+      break;
+  }
+  
   m_view->RenderScene();
 }
 
