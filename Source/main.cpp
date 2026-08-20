@@ -3,6 +3,7 @@
 #include <qwidget>
 
 #include <Core/Exceptions/ApplicationException.h>
+#include <Core/Logger/Logger.h>
 #include <UI/ViewFactory/ViewFactory.h>
 #include <ViewerController.h>
 
@@ -17,6 +18,6 @@ int main(int argc, char * argv[])
   }
   catch (ApplicationException & e)
   {
-    std::cerr << e.what();
+    Core::Logger::Error(e);
   }
 }

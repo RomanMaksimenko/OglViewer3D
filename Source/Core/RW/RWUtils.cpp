@@ -24,3 +24,23 @@ std::string ReadFile(const std::filesystem::path& path)
 
   return result;
 }
+
+
+
+//------------------------------------------------------------------------------
+/**
+   Записать файл
+*/
+//---
+bool WriteFile(const std::filesystem::path& path, std::string_view data)
+{
+  std::ofstream file(path);
+
+  if (!file.is_open())
+    throw FileException("Failed to open file fo writing " + path.string());
+
+  file.write(data.data(), static_cast<std::streamsize>(data.size()));
+
+  if (!file)
+    throw FileException("Failed to write file: " + path.string());
+}
