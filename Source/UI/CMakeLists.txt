@@ -1,6 +1,7 @@
 ﻿add_library(UI)
 
 set(UI_PRIVATE_SOURCES
+    "ErrorMSG/ErrorMSG.cpp"
     "ControlButtonsView/ControlButtonsView.cpp"
     "RenderView/RenderView.cpp"
     "RenderView/Mesh.cpp"
@@ -10,6 +11,7 @@ set(UI_PRIVATE_SOURCES
     "ViewFactory/ViewFactory.cpp"
 )
 set(UI_PUBLIC_HEADERS
+    "ErrorMSG/ErrorMSG.h"
     "IControlButtonsView.h"
     "IRenderView.h"
     "ViewFactory/ViewFactory.h"
