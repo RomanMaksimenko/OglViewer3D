@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Math/Matrix.h"
+#include "Math/Vertex.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -23,7 +24,7 @@ struct IModelProvider
   virtual ~IModelProvider() = default;
 
   /// Получить вершины для отрисовки
-  virtual std::vector<Vertex> GetVertexes() const = 0;
+  virtual std::vector<Vertex> GetVertices() const = 0;
   /// Получить индексы порядка отрисовки вершин
   virtual std::vector<unsigned int> GetIndices() const = 0;
   /// Получить матрицу MVP 

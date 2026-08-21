@@ -2,11 +2,20 @@
 add_executable(OGL3dViewer
     main.cpp )
 
+# Уберем консоль
+if(WIN32)
+    set_target_properties(OGL3dViewer PROPERTIES
+        WIN32_EXECUTABLE ON
+    )
+endif()
+
 target_include_directories(OGL3dViewer PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(OGL3dViewer PRIVATE Qt6::Core UI Controller Math Model)
+
+
+target_link_libraries(OGL3dViewer PRIVATE Qt6::Core Core UI Controller Math Model)
 
 # Добавим необходимые Qt dll рядом с исполняемым файлом
 find_program(WINDEPLOYQT_BIN windeployqt6

@@ -1,0 +1,7 @@
+{
+  "name": "ogl3dviewer",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "glew"
+  ]
+}

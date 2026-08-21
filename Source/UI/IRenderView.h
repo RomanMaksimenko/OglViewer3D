@@ -6,6 +6,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <memory>
+
 struct IModelProvider;
 class QWidget;
 
@@ -17,8 +19,6 @@ class QWidget;
 ////////////////////////////////////////////////////////////////////////
 struct IRenderView
 {
-  ~IRenderView() = default;
-
   /// Установить проводника модели
   virtual void SetModelProvider(IModelProvider * modelProvider) = 0;
   /// Отрисовать сцену
@@ -29,4 +29,4 @@ struct IRenderView
 
 
 /// Функция создания
-IRenderView * CreateRenderView(QWidget * parent);
+IRenderView* CreateRenderView(QWidget * parent);

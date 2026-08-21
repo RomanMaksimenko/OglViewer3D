@@ -8,6 +8,7 @@
 
 struct IModelProvider;
 struct IViewObserver;
+struct VisibleRect;
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -26,4 +27,6 @@ struct IView
   virtual void SetModelProvider(IModelProvider * modelProvider) = 0;
   /// Отрисовать сцену
   virtual void RenderScene() = 0;
+  /// Получить размер видимой области
+  virtual const VisibleRect & GetVisibleRect() const = 0;
 };

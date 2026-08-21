@@ -19,7 +19,7 @@ class ViewMainWindow : public QMainWindow,
   Q_OBJECT
 
   IControlButtonsView * m_buttonsView;
-  IRenderView * m_renderView;
+  IRenderView* m_renderView;
 
 public:
   ViewMainWindow(QWidget * parent = nullptr);
@@ -31,4 +31,6 @@ public:
   virtual void SetModelProvider(IModelProvider * modelProvider) override;
   /// Отрисовать сцену
   virtual void RenderScene() override;
+  /// Получить размер видимой области
+  virtual const VisibleRect & GetVisibleRect() const override;
 };
