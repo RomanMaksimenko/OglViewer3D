@@ -4,6 +4,7 @@
 
 #include <Core/Exceptions/ApplicationException.h>
 #include <Core/Logger/Logger.h>
+#include <UI/ErrorMSG/ErrorMSG.h>
 #include <UI/ViewFactory/ViewFactory.h>
 #include <ViewerController.h>
 
@@ -19,5 +20,6 @@ int main(int argc, char * argv[])
   catch (ApplicationException & e)
   {
     Core::Logger::Error(e);
+    ErrorMessage::Show(e.what());
   }
 }
