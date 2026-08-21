@@ -14,67 +14,52 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # ------------------------------------------------------------
-      # Checkout
-      # ------------------------------------------------------------
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
 
-      # ------------------------------------------------------------
-      # Qt
-      # ------------------------------------------------------------
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: ${{ env.QT_VERSION }}
-          host: windows
-          target: desktop
-          arch: win64_msvc2022_64
-          cache: true
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{ env.QT_VERSION }}
+        host: windows
+        target: desktop
+        arch: win64_msvc2022_64
+        cache: true
 
-      # ------------------------------------------------------------
-      # MSVC
-      # ------------------------------------------------------------
-      - name: Setup MSVC environment
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x64
-
-      # ------------------------------------------------------------
-      # Ninja
-      # ------------------------------------------------------------
-      - name: Install Ninja
-        run: choco install ninja -y
-        shell: pwsh
+    - name: Setup MSVC environment
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
         
-      - name: Initialize vcpkg baseline
-        run: |
-         "%VCPKG_ROOT%\vcpkg.exe" x-update-baseline --add-initial-baseline
-        shell: cmd
-       
-      # ------------------------------------------------------------
-      # Configure
-      # ------------------------------------------------------------
-      - name: Configure with Ninja
-        run: >
+    - name: Install GLEW
+      run: |
+        vcpkg install glew:x64-windows
+      shell: cmd
+
+    # Устанавливаем Ninja (он уже есть в runner, но на всякий случай)
+    - name: Install Ninja
+      run: choco install ninja -y
+      shell: pwsh
+
+    # Используем Ninja вместо Visual Studio
+    - name: Configure with Ninja
+      run: >
           cmake -B "%BUILD_DIR%"
           -G "Ninja"
           -DCMAKE_BUILD_TYPE="%BUILD_TYPE%"
           -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake"
           -DVCPKG_TARGET_TRIPLET=x64-windows
-        shell: cmd
-        env:
+      shell: cmd
+      env:
           BUILD_DIR: ${{ env.BUILD_DIR }}
           BUILD_TYPE: ${{ env.BUILD_TYPE }}
 
-      # ------------------------------------------------------------
-      # Build
-      # ------------------------------------------------------------
-      - name: Build with Ninja
-        run: |
-          cmake --build "%BUILD_DIR%"
-        shell: cmd
-        env:
-          BUILD_DIR: ${{ env.BUILD_DIR }}
+    - name: Build with Ninja
+      run: |
+        cmake --build %BUILD_DIR% --config %BUILD_TYPE%
+      shell: cmd
+      env:
+        BUILD_DIR: ${{ env.BUILD_DIR }}
+        BUILD_TYPE: ${{ env.BUILD_TYPE }}
