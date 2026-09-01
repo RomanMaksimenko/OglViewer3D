@@ -35,8 +35,8 @@ target_compile_definitions(UI PRIVATE
 )
 
 # target UI зависит от Qt и OpenGL
-target_link_libraries(UI PUBLIC Qt6::Core Qt6::Widgets Qt6::OpenGLWidgets OpenGL::GL
-                         PRIVATE Qt6::Gui GLEW::GLEW)
+target_link_libraries(UI PUBLIC Qt6::Core Qt6::Widgets Qt6::OpenGLWidgets OpenGL::GL Math
+                         PRIVATE Qt6::Gui GLEW::GLEW )
 
 
 

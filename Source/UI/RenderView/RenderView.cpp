@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+#include <Math/MathUtils.h>
+#include <Math/Matrix.h>
+#include <Math/Vector3f.h>
+
 #include "Controller/IModelProvider.h"
 #include "Core/Exceptions/ApplicationException.h"
 
@@ -44,7 +48,7 @@ RenderView::~RenderView()
 //---
 void RenderView::SetModelProvider(IModelProvider * modelProvider)
 {
-  m_modelProvider = modelProvider; 
+  m_modelProvider = modelProvider;
   // Если контекст OpenGl существует
   if (isValid())
   {
@@ -84,6 +88,47 @@ QWidget * RenderView::widget()
   return this;
 }
 
+struct ProjectionParams
+{
+  float FOV;
+  int Width;
+  int Height;
+  float zNear;
+  float zFar;
+};
+
+Matrix4f GetProjectionMatrix(const ProjectionParams & pars)
+{
+  Matrix4f ProjMatrix = Matrix4f::Identity();
+  float tanHalfFOV = tanf(AngleUtils::ToRadians(pars.FOV) / 2.0f);
+  float f = 1.0 / tanHalfFOV;
+
+  float zRange = pars.zNear - pars.zFar;
+  float A = (-pars.zFar - pars.zNear) / zRange;       // Исправлено
+  float B = (2.0f * pars.zFar * pars.zNear) / zRange; // Исправлено
+  float ar = float(pars.Width) / float(pars.Height);
+  ProjMatrix[0][0] = f / ar; // 1-й столбец
+  ProjMatrix[1][0] = 0;
+  ProjMatrix[2][0] = 0;
+  ProjMatrix[3][0] = 0;
+
+  ProjMatrix[0][1] = 0; // 2-й столбец
+  ProjMatrix[1][1] = f;
+  ProjMatrix[2][1] = 0;
+  ProjMatrix[3][1] = 0;
+
+  ProjMatrix[0][2] = 0; // 3-й столбец
+  ProjMatrix[1][2] = 0;
+  ProjMatrix[2][2] = A;
+  ProjMatrix[3][2] = 1;
+
+  ProjMatrix[0][3] = 0; // 4-й столбец
+  ProjMatrix[1][3] = 0;
+  ProjMatrix[2][3] = B;
+  ProjMatrix[3][3] = 0;
+
+  return ProjMatrix;
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -92,12 +137,17 @@ QWidget * RenderView::widget()
 //---
 void RenderView::paintGL()
 {
+  static ProjectionParams projPars{90.0, this->width(), this->height(), 1.0, 10.0};
   glClear(GL_COLOR_BUFFER_BIT);
   if (IsReadyToDraw())
   {
     glUseProgram(m_GLprogram.Id());
     glBindVertexArray(m_mesh.VAO());
-    auto MVP = m_modelProvider->GetMVPMatrix();
+    Matrix4f View = m_modelProvider->GetMVPMatrix();
+    Matrix4f Model = Matrix4f::Identity();
+    Matrix4f Projection = GetProjectionMatrix(projPars);
+
+    auto MVP = Projection * View * Model;
     glUniformMatrix4fv(m_GLprogram.TransformLocation(), 1, GL_TRUE, &MVP[0][0]);
     glDrawElements(GL_TRIANGLES, m_mesh.IndexCount(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

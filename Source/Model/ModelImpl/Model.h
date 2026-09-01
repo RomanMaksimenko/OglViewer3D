@@ -22,6 +22,12 @@ class Model final : public IModel
   std::vector<unsigned int> m_indices;
   AxisAlignedBoundedBox m_boundedBox;
   Matrix4f m_transform;
+  Matrix4f rx, ry, rz;
+  /// Заготовка для камеры
+  Vector3f m_position;
+  Vector3f m_target;
+  Vector3f m_up;
+  float m_speed = 1.0;
 
 public:
   Model();
