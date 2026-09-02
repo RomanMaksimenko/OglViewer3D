@@ -109,7 +109,7 @@ void ViewerController::RotateModel(Axis axis, RotationDirection rDir)
 {
   if (!m_model || !m_view)
     return;
-  auto rotate = rDir == RotationDirection::CW ? delta * -10.0 : delta * 10.0;
+  auto rotate = rDir == RotationDirection::CW ? delta * 10.0 : delta * -10.0;
   switch (axis)
   {
     case Axis::X:
