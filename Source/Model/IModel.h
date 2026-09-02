@@ -30,7 +30,7 @@ struct IModel
   /// Повернуть модель
   virtual void Rotate(float angleX, float angleY, float angleZ) = 0;
   /// Масштабировать
-  virtual void Scale(float sx, float sy, float sz) = 0;
+  virtual void Scale(float scale) = 0;
   /// Получить вершины для отрисовки
   virtual const std::vector<Vertex> & GetVertices() const = 0;
   /// Получить индексы порядка отрисовки вершин

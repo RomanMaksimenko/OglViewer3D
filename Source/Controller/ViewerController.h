@@ -49,5 +49,5 @@ public:
   /// Получить индексы порядка отрисовки вершин
   virtual std::vector<unsigned int> GetIndices() const;
   /// Получить матрицу MVP
-  virtual Matrix4f GetMVPMatrix() const;
+  virtual Matrix4f GetMVPMatrix() const; 
 };

@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Model/IModel.h"
-
 #include <Math/AxisAlignedBoundedBox.h>
 #include <Math/Matrix.h>
+
+#include "Model/IModel.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -21,13 +21,11 @@ class Model final : public IModel
   std::vector<Vertex> m_vertices;
   std::vector<unsigned int> m_indices;
   AxisAlignedBoundedBox m_boundedBox;
-  Matrix4f m_transform;
-  Matrix4f rx, ry, rz;
-  /// Заготовка для камеры
   Vector3f m_position;
-  Vector3f m_target;
-  Vector3f m_up;
-  float m_speed = 1.0;
+  float m_rotationX = 0.0f;
+  float m_rotationY = 0.0f;
+  float m_rotationZ = 0.0f;
+  float m_scale = 0.5f;
 
 public:
   Model();
@@ -37,7 +35,7 @@ public:
   /// Повернуть модель
   virtual void Rotate(float angleX, float angleY, float angleZ) override;
   /// Масштабировать
-  virtual void Scale(float sx, float sy, float sz) override;
+  virtual void Scale(float scale) override;
   /// Получить вершины для отрисовки
   virtual const std::vector<Vertex> & GetVertices() const override;
   /// Получить индексы порядка отрисовки вершин
@@ -46,4 +44,8 @@ public:
   virtual Matrix4f GetTransformMatrix() const override;
   /// Получить ограничивающий объем модели
   virtual const AxisAlignedBoundedBox & GetBoundedBox() const override;
+
+private:
+  /// Получить матрицу трансформации
+  Matrix4f GetRotationMatrix() const;
 };
