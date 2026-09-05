@@ -9,6 +9,7 @@ set(CORE_PUBLIC_HEADERS
 "RW/RWUtils.h"
 "Exceptions/ApplicationException.h"
 "Exceptions/FileException.h"
+"Exceptions/MathException.h"
 "Exceptions/ShaderException.h"
 "Logger/Logger.h"
 )
