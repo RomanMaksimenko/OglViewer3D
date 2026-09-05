@@ -4,19 +4,6 @@
 #include <Math/MathUtils.h>
 
 
-namespace VectorUtils
-{
-
-Vector3f & operator+=(Vector3f & lhs, const Vector3f & rhs)
-{
-  lhs.x += rhs.x;
-  lhs.y += rhs.y;
-  lhs.z += rhs.z;
-  return lhs;
-}
-
-} // namespace VectorUtils
-
 //------------------------------------------------------------------------------
 /**
    Переместить модель
@@ -39,7 +26,7 @@ Model::Model()
 //---
 void Model::Translate(float dx, float dy, float dz)
 {
-  m_position = VectorUtils::operator+=(m_position,Vector3f{dx, dy, dz});
+  m_position += Vector3f{dx, dy, dz};
 }
 
 
