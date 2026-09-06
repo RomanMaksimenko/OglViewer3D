@@ -7,6 +7,7 @@
 #include <UI/ErrorMSG/ErrorMSG.h>
 #include <UI/ViewFactory/ViewFactory.h>
 #include <ViewerController.h>
+#include <Scene/Scene.h>
 
 int main(int argc, char * argv[])
 {
@@ -14,7 +15,7 @@ int main(int argc, char * argv[])
   {
     QApplication app(argc, argv);
     ViewFactory vf;
-    ViewerController vc(vf);
+    ViewerController vc(vf,CreateScene());
     return app.exec();
   }
   catch (ApplicationException & e)

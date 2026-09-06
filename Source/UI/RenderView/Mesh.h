@@ -8,7 +8,9 @@
 
 #include <GL/glew.h>
 
-#include "Controller/IModelProvider.h"
+#include <vector>
+
+#include <Math/Vertex.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 //

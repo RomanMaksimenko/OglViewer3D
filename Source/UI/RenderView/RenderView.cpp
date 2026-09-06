@@ -6,7 +6,8 @@
 #include <Math/Matrix.h>
 #include <Math/Vector3f.h>
 
-#include "Controller/IModelProvider.h"
+#include <Core/Scene/ISceneProvider.h>
+
 #include "Core/Exceptions/ApplicationException.h"
 
 
@@ -46,18 +47,18 @@ RenderView::~RenderView()
    Установить подписчика
 */
 //---
-void RenderView::SetModelProvider(IModelProvider * modelProvider)
+void RenderView::SetSceneProvider(ISceneProvider * sceneProvider)
 {
-  m_modelProvider = modelProvider;
+  m_sceneProvider = sceneProvider;
   // Если контекст OpenGl существует
   if (isValid())
   {
     // Делаем контекст OpenGl текущим
     makeCurrent();
     CleanUpGl();
-    if (m_modelProvider)
+    if (m_sceneProvider)
     {
-      m_mesh.Create(m_modelProvider->GetVertices(), m_modelProvider->GetIndices());
+      m_mesh.Create(m_sceneProvider->GetVertices(), m_sceneProvider->GetIndices());
       m_GLprogram.Create();
     }
     // Завершаем работу с контекстом
@@ -143,7 +144,7 @@ void RenderView::paintGL()
   {
     glUseProgram(m_GLprogram.Id());
     glBindVertexArray(m_mesh.VAO());
-    Matrix4f View = m_modelProvider->GetMVPMatrix();
+    Matrix4f View = m_sceneProvider->GetModelMatrix();
     Matrix4f Model = Matrix4f::Identity();
     Matrix4f Projection = GetProjectionMatrix(projPars);
 

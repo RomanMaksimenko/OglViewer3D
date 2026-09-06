@@ -24,7 +24,7 @@ class RenderView : public QOpenGLWidget,
   Q_OBJECT
 
 private:
-  IModelProvider * m_modelProvider = nullptr;
+  ISceneProvider * m_sceneProvider = nullptr;
   ShaderProgram m_GLprogram;
   Mesh m_mesh;
 
@@ -34,7 +34,7 @@ public:
 
   /// IRenderView
   /// Установить проводника модели
-  virtual void SetModelProvider(IModelProvider * modelProvider) override;
+  virtual void SetSceneProvider(ISceneProvider * sceneProvider) override;
   /// Отрисовать сцену
   virtual void RenderScene() override;
   /// Выдать указатель на себя как на QWidget
