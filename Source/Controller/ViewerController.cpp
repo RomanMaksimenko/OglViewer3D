@@ -4,6 +4,7 @@
 
 #include "IModelService.h"
 #include "IViewFactory.h"
+#include <Core/Scene/IScene.h>
 #include "Math/Vector3f.h"
 #include "UI/IView.h"
 #include "UI/VisibleRect.h"
@@ -19,12 +20,13 @@ constexpr double delta = 0.1;
 /**
 */
 //---
-ViewerController::ViewerController(IViewFactory & viewFactory)
+ViewerController::ViewerController(IViewFactory & viewFactory,std::unique_ptr<IScene> scene)
   : m_view(viewFactory.CreateView())
   , m_model(new Model())
   , m_modelService(CreateModelService())
+  , m_scene(std::move(scene))
 {
-  m_view->SetModelProvider(this);
+  m_view->SetSceneProvider(this);
   m_view->SetViewObserver(this);
 }
 
@@ -173,10 +175,32 @@ std::vector<unsigned int> ViewerController::GetIndices() const
 
 //------------------------------------------------------------------------------
 /**
-   Получить матрицу MVP
+   Получить матрицу модели
 */
 //---
-Matrix4f ViewerController::GetMVPMatrix() const
+const Matrix4f & ViewerController::GetModelMatrix() const
 {
   return m_model->GetTransformMatrix();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Получить  матрицу трансформации вида
+*/
+//---
+const Matrix4f & ViewerController::GetViewMatrix() const
+{
+  return m_scene->GetViewMatrix();
+}
+
+ 
+//------------------------------------------------------------------------------
+/**
+   Получить матрицу проекции
+*/
+//---
+const Matrix4f& ViewerController::GetProjectionMatrix() const
+{
+  return m_scene->GetProjectionMatrix();
 }

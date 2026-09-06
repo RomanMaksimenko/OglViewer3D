@@ -43,9 +43,9 @@ void ViewMainWindow::SetViewObserver(IViewObserver* observer)
    Установить проводника модели
 */
 //---
-void ViewMainWindow::SetModelProvider(IModelProvider * modelProvider)
+void ViewMainWindow::SetSceneProvider(ISceneProvider * sceneProvider)
 {
-  m_renderView->SetModelProvider(modelProvider);
+  m_renderView->SetSceneProvider(sceneProvider);
 }
 
 
