@@ -34,6 +34,8 @@ public:
   virtual Matrix4f GetViewMatrix() const override;
   /// Выдать матрицу проекции
   virtual Matrix4f GetProjectionMatrix() const override;
+  /// Задать размер области отрисовки
+  virtual void SetViewport(const Viewport & viewport) override;
 };
 
 /// Функция создания

@@ -204,3 +204,14 @@ Matrix4f ViewerController::GetProjectionMatrix() const
 {
   return m_scene->GetProjectionMatrix();
 }
+
+
+//------------------------------------------------------------------------------
+/**
+   Задать размер области отрисовки
+*/
+//---
+void ViewerController::SetViewport(const Viewport& vieport)
+{
+
+}

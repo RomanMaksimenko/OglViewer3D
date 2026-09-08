@@ -57,5 +57,7 @@ public:
   /// Получить  матрицу трансформации вида
   virtual Matrix4f GetViewMatrix() const override;
   /// Получить матрицу проекции
-  virtual Matrix4f GetProjectionMatrix() const override;
+  virtual Matrix4f GetProjectionMatrix() const override; 
+  /// Задать размер области отрисовки
+  virtual void SetViewport(const Viewport & vieport) override;
 };
