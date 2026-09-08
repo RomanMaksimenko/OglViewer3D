@@ -9,6 +9,9 @@
 
 #include <Core/Scene/IScene.h>
 
+#include <Scene/Camera/Camera.h>
+
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 /// Объект сосояния сцены
@@ -19,18 +22,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 class Scene : public IScene
 {
+  Camera m_camera;
+
 public:
-  ~Scene() = default;
-  /// Изменить положение модели на сцене
-  virtual void SetTranslation(float dx, float dy, float dz) override;
-  /// Изменить углы вращения модели на сцене
-  virtual void SetRotation(float rx, float ry, float rz) override;
-  /// Изменить масштаб
-  virtual void SetScale(float scale) override;
+  Scene() = default;
+  /// Изменить положение камеры
+  virtual void MoveCamera(float dx, float dy, float dz) override;
+  /// Повернуть камеру
+  virtual void RotateCamera(float rx, float ry, float rz) override;
   /// Выдать матрицу трансформации вида
-  virtual const Matrix4f & GetViewMatrix() const override;
+  virtual Matrix4f GetViewMatrix() const override;
   /// Выдать матрицу проекции
-  virtual const Matrix4f & GetProjectionMatrix() const override;
+  virtual Matrix4f GetProjectionMatrix() const override;
 };
 
 /// Функция создания

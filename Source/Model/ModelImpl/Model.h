@@ -21,11 +21,7 @@ class Model final : public IModel
   std::vector<Vertex> m_vertices;
   std::vector<unsigned int> m_indices;
   AxisAlignedBoundedBox m_boundedBox;
-  Vector3f m_position;
-  float m_rotationX = 0.0f;
-  float m_rotationY = 0.0f;
-  float m_rotationZ = 0.0f;
-  float m_scale = 0.5f;
+  Matrix4f m_transform;
 
 public:
   Model();
@@ -44,8 +40,4 @@ public:
   virtual Matrix4f GetTransformMatrix() const override;
   /// Получить ограничивающий объем модели
   virtual const AxisAlignedBoundedBox & GetBoundedBox() const override;
-
-private:
-  /// Получить матрицу трансформации
-  Matrix4f GetRotationMatrix() const;
 };

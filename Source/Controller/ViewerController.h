@@ -53,9 +53,9 @@ public:
   /// Получить индексы порядка отрисовки вершин
   virtual std::vector<unsigned int> GetIndices() const override;
   /// Получить матрицу модели
-  virtual const Matrix4f & GetModelMatrix() const override;
+  virtual Matrix4f GetModelMatrix() const override;
   /// Получить  матрицу трансформации вида
-  virtual const Matrix4f & GetViewMatrix() const override;
+  virtual Matrix4f GetViewMatrix() const override;
   /// Получить матрицу проекции
-  virtual const Matrix4f & GetProjectionMatrix() const override;
+  virtual Matrix4f GetProjectionMatrix() const override;
 };

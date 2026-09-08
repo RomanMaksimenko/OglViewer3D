@@ -144,8 +144,8 @@ void RenderView::paintGL()
   {
     glUseProgram(m_GLprogram.Id());
     glBindVertexArray(m_mesh.VAO());
-    Matrix4f View = m_sceneProvider->GetModelMatrix();
-    Matrix4f Model = Matrix4f::Identity();
+    Matrix4f View = m_sceneProvider->GetViewMatrix();
+    Matrix4f Model = m_sceneProvider->GetModelMatrix();
     Matrix4f Projection = GetProjectionMatrix(projPars);
 
     auto MVP = Projection * View * Model;
