@@ -1,7 +1,8 @@
 add_library(Scene)
 
 set(SCENE_PRIVATE_SOURCES 
- "Scene.cpp")
+  "Scene.cpp"
+  "Camera/Camera.cpp")  
 
 set(SCENE_PUBLIC_HEADERS
   "Scene.h")

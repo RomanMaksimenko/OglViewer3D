@@ -5,34 +5,23 @@
 
 //------------------------------------------------------------------------------
 /**
-   Изменить положение модели на сцене
+   Изменить положение камеры
 */
 //---
-void Scene::SetTranslation(float dx, float dy, float dz)
+void Scene::MoveCamera(float dx, float dy, float dz)
 {
-
+  m_camera.Move(dx, dy, dz);
 }
 
 
 //------------------------------------------------------------------------------
 /**
-   Изменить углы вращения модели на сцене
+   Повернуть камеру
 */
 //---
-void Scene::SetRotation(float rx, float ry, float rz)
+void Scene::RotateCamera(float rx, float ry, float rz)
 {
-
-}
-
-
-//------------------------------------------------------------------------------
-/**
-   Изменить масштаб
-*/
-//---
-void Scene::SetScale(float scale)
-{
-
+  m_camera.Rotate(rx, ry, rz);
 }
 
 
@@ -41,9 +30,9 @@ void Scene::SetScale(float scale)
    Выдать матрицу трансформации вида
 */
 //---
-const Matrix4f & Scene::GetViewMatrix() const
+Matrix4f Scene::GetViewMatrix() const
 {
-  return Matrix4f::Identity();
+  return m_camera.GetViewMatrix();
 }
 
 
@@ -52,7 +41,7 @@ const Matrix4f & Scene::GetViewMatrix() const
    Выдать матрицу проекции
 */
 //---
-const Matrix4f & Scene::GetProjectionMatrix() const
+Matrix4f Scene::GetProjectionMatrix() const
 {
   return Matrix4f::Identity();
 }
