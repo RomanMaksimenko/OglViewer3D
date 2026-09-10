@@ -60,6 +60,7 @@ void RenderView::SetSceneProvider(ISceneProvider * sceneProvider)
     {
       m_mesh.Create(m_sceneProvider->GetVertices(), m_sceneProvider->GetIndices());
       m_GLprogram.Create();
+      m_sceneProvider->SetViewport({width(),height()});
     }
     // Завершаем работу с контекстом
     doneCurrent();
@@ -89,47 +90,6 @@ QWidget * RenderView::widget()
   return this;
 }
 
-struct ProjectionParams
-{
-  float FOV;
-  int Width;
-  int Height;
-  float zNear;
-  float zFar;
-};
-
-Matrix4f GetProjectionMatrix(const ProjectionParams & pars)
-{
-  Matrix4f ProjMatrix = Matrix4f::Identity();
-  float tanHalfFOV = tanf(AngleUtils::ToRadians(pars.FOV) / 2.0f);
-  float f = 1.0 / tanHalfFOV;
-
-  float zRange = pars.zNear - pars.zFar;
-  float A = (-pars.zFar - pars.zNear) / zRange;       // Исправлено
-  float B = (2.0f * pars.zFar * pars.zNear) / zRange; // Исправлено
-  float ar = float(pars.Width) / float(pars.Height);
-  ProjMatrix[0][0] = f / ar; // 1-й столбец
-  ProjMatrix[1][0] = 0;
-  ProjMatrix[2][0] = 0;
-  ProjMatrix[3][0] = 0;
-
-  ProjMatrix[0][1] = 0; // 2-й столбец
-  ProjMatrix[1][1] = f;
-  ProjMatrix[2][1] = 0;
-  ProjMatrix[3][1] = 0;
-
-  ProjMatrix[0][2] = 0; // 3-й столбец
-  ProjMatrix[1][2] = 0;
-  ProjMatrix[2][2] = A;
-  ProjMatrix[3][2] = 1;
-
-  ProjMatrix[0][3] = 0; // 4-й столбец
-  ProjMatrix[1][3] = 0;
-  ProjMatrix[2][3] = B;
-  ProjMatrix[3][3] = 0;
-
-  return ProjMatrix;
-}
 
 //------------------------------------------------------------------------------
 /**
@@ -138,7 +98,6 @@ Matrix4f GetProjectionMatrix(const ProjectionParams & pars)
 //---
 void RenderView::paintGL()
 {
-  static ProjectionParams projPars{90.0, this->width(), this->height(), 1.0, 10.0};
   glClear(GL_COLOR_BUFFER_BIT);
   if (IsReadyToDraw())
   {
@@ -146,7 +105,7 @@ void RenderView::paintGL()
     glBindVertexArray(m_mesh.VAO());
     Matrix4f View = m_sceneProvider->GetViewMatrix();
     Matrix4f Model = m_sceneProvider->GetModelMatrix();
-    Matrix4f Projection = GetProjectionMatrix(projPars);
+    Matrix4f Projection = m_sceneProvider->GetProjectionMatrix();
 
     auto MVP = Projection * View * Model;
     glUniformMatrix4fv(m_GLprogram.TransformLocation(), 1, GL_TRUE, &MVP[0][0]);

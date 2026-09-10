@@ -8,8 +8,8 @@
 #include <memory>
 
 #include <Core/Scene/IScene.h>
-
 #include <Scene/Camera/Camera.h>
+#include <Scene/ProjectionParams.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -22,10 +22,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 class Scene : public IScene
 {
-  Camera m_camera;
+  Camera m_camera;             ///< Камера
+  ProjectionParams m_projPars; ///< Параметры проецирования
 
 public:
-  Scene() = default;
+  Scene();
   /// Изменить положение камеры
   virtual void MoveCamera(float dx, float dy, float dz) override;
   /// Повернуть камеру

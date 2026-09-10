@@ -3,6 +3,21 @@
 #include <Math/Matrix.h>
 
 
+const ProjectionParams c_defaultProjectionParams(90.0, {800, 600}, 1.0, 10.0);
+
+
+//------------------------------------------------------------------------------
+/**
+
+*/
+//---
+Scene::Scene()
+  : m_camera()
+  , m_projPars(c_defaultProjectionParams)
+{
+}
+
+
 //------------------------------------------------------------------------------
 /**
    Изменить положение камеры
@@ -43,9 +58,8 @@ Matrix4f Scene::GetViewMatrix() const
 //---
 Matrix4f Scene::GetProjectionMatrix() const
 {
-  return Matrix4f::Identity();
+  return m_projPars.GetProjectionMatrix();
 }
-
 
 
 //------------------------------------------------------------------------------
@@ -55,11 +69,10 @@ Matrix4f Scene::GetProjectionMatrix() const
 //---
 void Scene::SetViewport(const Viewport & viewport)
 {
-
+  m_projPars.SetViewport(viewport);
 }
 
 
- 
 //------------------------------------------------------------------------------
 /**
    Функция создания

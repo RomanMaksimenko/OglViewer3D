@@ -2,6 +2,7 @@ add_library(Scene)
 
 set(SCENE_PRIVATE_SOURCES 
   "Scene.cpp"
+  "ProjectionParams.cpp"
   "Camera/Camera.cpp")  
 
 set(SCENE_PUBLIC_HEADERS

@@ -72,28 +72,28 @@ void ViewerController::MoveModel(Direction dir)
   switch (dir)
   {
     case Direction::Left:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(-delta, 0.0, 0.0)))
-        m_scene->MoveCamera(-delta, 0.0, 0.0);
-      break;
-    case Direction::Right:
       if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(delta, 0.0, 0.0)))
         m_scene->MoveCamera(delta, 0.0, 0.0);
       break;
-    case Direction::Up:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, delta, 0.0)))
-        m_scene->MoveCamera(0.0, delta, 0.0);
+    case Direction::Right:
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(-delta, 0.0, 0.0)))
+        m_scene->MoveCamera(-delta, 0.0, 0.0);
       break;
-    case Direction::Down:
+    case Direction::Up:
       if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, -delta, 0.0)))
         m_scene->MoveCamera(0.0, -delta, 0.0);
       break;
-    case Direction::Front:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, -delta)))
-        m_scene->MoveCamera(0.0, 0.0, -delta);
+    case Direction::Down:
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, delta, 0.0)))
+        m_scene->MoveCamera(0.0, delta, 0.0);
       break;
-    case Direction::Back:
+    case Direction::Front:
       if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, delta)))
         m_scene->MoveCamera(0.0, 0.0, delta);
+      break;
+    case Direction::Back:
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, -delta)))
+        m_scene->MoveCamera(0.0, 0.0, -delta);
       break;
     default:
       break;
@@ -213,5 +213,5 @@ Matrix4f ViewerController::GetProjectionMatrix() const
 //---
 void ViewerController::SetViewport(const Viewport& vieport)
 {
-
+  m_scene->SetViewport(vieport);
 }
