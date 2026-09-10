@@ -14,6 +14,7 @@ set(CORE_PUBLIC_HEADERS
 "Logger/Logger.h"
 "Scene/IScene.h"
 "Scene/ISceneProvider.h"
+"Scene/Viewport.h"
 )
 
 target_sources(Core PRIVATE

@@ -6,6 +6,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <Core/Scene/Viewport.h>
+
 #include <Math/Matrix.h>
 
 ////////////////////////////////////////////////////////////////////////
@@ -25,5 +27,7 @@ struct IScene
   /// Выдать матрицу трансформации вида
   virtual Matrix4f GetViewMatrix() const = 0;
   /// Выдать матрицу проекции
-  virtual Matrix4f GetProjectionMatrix() const = 0;
+  virtual Matrix4f GetProjectionMatrix() const = 0; 
+  /// Задать размер области отрисовки
+  virtual void SetViewport(const Viewport &) = 0;
 };

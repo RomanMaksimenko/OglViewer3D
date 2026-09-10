@@ -8,8 +8,11 @@
 
 #include <vector>
 
-#include "Math/Vertex.h"
-#include "Math/Matrix.h"
+#include <Core/Scene/Viewport.h>
+
+#include <Math/Vertex.h>
+#include <Math/Matrix.h>
+
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -32,4 +35,6 @@ struct ISceneProvider
   virtual Matrix4f GetViewMatrix() const = 0;
   /// Получить матрицу проекции
   virtual Matrix4f GetProjectionMatrix() const = 0;
+  /// Задать размер области отрисовки
+  virtual void SetViewport(const Viewport &) = 0;
 };
