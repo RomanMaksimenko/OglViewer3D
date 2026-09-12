@@ -8,7 +8,7 @@
 
 #include <memory>
 
-struct IModelProvider;
+struct ISceneProvider;
 class QWidget;
 
 ////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ class QWidget;
 struct IRenderView
 {
   /// Установить проводника модели
-  virtual void SetModelProvider(IModelProvider * modelProvider) = 0;
+  virtual void SetSceneProvider(ISceneProvider * sceneProvider) = 0;
   /// Отрисовать сцену
   virtual void RenderScene() = 0; 
   /// Выдать указатель на себя как на QWidget

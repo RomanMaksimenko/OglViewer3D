@@ -1,0 +1,33 @@
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+/// IScene.h содержит интерфейс, предоставляющий доступ объекту состояния сцены
+/**
+*/
+////////////////////////////////////////////////////////////////////////////////
+#pragma once
+
+#include <Core/Scene/Viewport.h>
+
+#include <Math/Matrix.h>
+
+////////////////////////////////////////////////////////////////////////
+//
+/// Интерфейс для взаимодействия со сценой
+/**
+*/
+////////////////////////////////////////////////////////////////////////
+struct IScene
+{
+  virtual ~IScene() = default;
+
+  /// Изменить положение камеры
+  virtual void MoveCamera(float dx, float dy, float dz) = 0;
+  /// Повернуть камеру
+  virtual void RotateCamera(float rx, float ry, float rz) = 0;
+  /// Выдать матрицу трансформации вида
+  virtual Matrix4f GetViewMatrix() const = 0;
+  /// Выдать матрицу проекции
+  virtual Matrix4f GetProjectionMatrix() const = 0; 
+  /// Задать размер области отрисовки
+  virtual void SetViewport(const Viewport &) = 0;
+};

@@ -2,7 +2,12 @@
 
 #include <iostream>
 
-#include "Controller/IModelProvider.h"
+#include <Math/MathUtils.h>
+#include <Math/Matrix.h>
+#include <Math/Vector3f.h>
+
+#include <Core/Scene/ISceneProvider.h>
+
 #include "Core/Exceptions/ApplicationException.h"
 
 
@@ -42,19 +47,20 @@ RenderView::~RenderView()
    Установить подписчика
 */
 //---
-void RenderView::SetModelProvider(IModelProvider * modelProvider)
+void RenderView::SetSceneProvider(ISceneProvider * sceneProvider)
 {
-  m_modelProvider = modelProvider; 
+  m_sceneProvider = sceneProvider;
   // Если контекст OpenGl существует
   if (isValid())
   {
     // Делаем контекст OpenGl текущим
     makeCurrent();
     CleanUpGl();
-    if (m_modelProvider)
+    if (m_sceneProvider)
     {
-      m_mesh.Create(m_modelProvider->GetVertices(), m_modelProvider->GetIndices());
+      m_mesh.Create(m_sceneProvider->GetVertices(), m_sceneProvider->GetIndices());
       m_GLprogram.Create();
+      m_sceneProvider->SetViewport({width(),height()});
     }
     // Завершаем работу с контекстом
     doneCurrent();
@@ -97,7 +103,11 @@ void RenderView::paintGL()
   {
     glUseProgram(m_GLprogram.Id());
     glBindVertexArray(m_mesh.VAO());
-    auto MVP = m_modelProvider->GetMVPMatrix();
+    Matrix4f View = m_sceneProvider->GetViewMatrix();
+    Matrix4f Model = m_sceneProvider->GetModelMatrix();
+    Matrix4f Projection = m_sceneProvider->GetProjectionMatrix();
+
+    auto MVP = Projection * View * Model;
     glUniformMatrix4fv(m_GLprogram.TransformLocation(), 1, GL_TRUE, &MVP[0][0]);
     glDrawElements(GL_TRIANGLES, m_mesh.IndexCount(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

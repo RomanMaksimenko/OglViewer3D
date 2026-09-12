@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-struct IModelProvider;
+struct ISceneProvider;
 struct IViewObserver;
 struct VisibleRect;
 
@@ -24,7 +24,7 @@ struct IView
   /// Установить подписчика на события представления
   virtual void SetViewObserver(IViewObserver * observer) = 0;
   /// Установить проводника модели
-  virtual void SetModelProvider(IModelProvider * modelProvider) = 0;
+  virtual void SetSceneProvider(ISceneProvider * sceneProvider) = 0;
   /// Отрисовать сцену
   virtual void RenderScene() = 0;
   /// Получить размер видимой области

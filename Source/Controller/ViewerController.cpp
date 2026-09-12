@@ -4,6 +4,7 @@
 
 #include "IModelService.h"
 #include "IViewFactory.h"
+#include <Core/Scene/IScene.h>
 #include "Math/Vector3f.h"
 #include "UI/IView.h"
 #include "UI/VisibleRect.h"
@@ -11,7 +12,7 @@
 namespace
 {
 /// Константы трансляции модели
-constexpr double delta = 0.05;
+constexpr double delta = 0.1;
 } // namespace
 
 
@@ -19,12 +20,13 @@ constexpr double delta = 0.05;
 /**
 */
 //---
-ViewerController::ViewerController(IViewFactory & viewFactory)
+ViewerController::ViewerController(IViewFactory & viewFactory,std::unique_ptr<IScene> scene)
   : m_view(viewFactory.CreateView())
   , m_model(new Model())
   , m_modelService(CreateModelService())
+  , m_scene(std::move(scene))
 {
-  m_view->SetModelProvider(this);
+  m_view->SetSceneProvider(this);
   m_view->SetViewObserver(this);
 }
 
@@ -56,7 +58,7 @@ bool CanTranslateModel(const AxisAlignedBoundedBox & boundedBox, const VisibleRe
 //---
 void ViewerController::MoveModel(Direction dir)
 {
-  if (!m_model || !m_view)
+  if (!m_model || !m_view || !m_scene)
     return;
 
   // Границы модели
@@ -70,28 +72,28 @@ void ViewerController::MoveModel(Direction dir)
   switch (dir)
   {
     case Direction::Left:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(-delta, 0.0, 0.0)))
-        m_model->Translate(-delta, 0.0, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(delta, 0.0, 0.0)))
+        m_scene->MoveCamera(delta, 0.0, 0.0);
       break;
     case Direction::Right:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(delta, 0.0, 0.0)))
-        m_model->Translate(delta, 0.0, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(-delta, 0.0, 0.0)))
+        m_scene->MoveCamera(-delta, 0.0, 0.0);
       break;
     case Direction::Up:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, delta, 0.0)))
-        m_model->Translate(0.0, delta, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, -delta, 0.0)))
+        m_scene->MoveCamera(0.0, -delta, 0.0);
       break;
     case Direction::Down:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, -delta, 0.0)))
-        m_model->Translate(0.0, -delta, 0.0);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, delta, 0.0)))
+        m_scene->MoveCamera(0.0, delta, 0.0);
       break;
     case Direction::Front:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, -delta)))
-        m_model->Translate(0.0, 0.0, -delta);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, delta)))
+        m_scene->MoveCamera(0.0, 0.0, delta);
       break;
     case Direction::Back:
-      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, delta)))
-        m_model->Translate(0.0, 0.0, delta);
+      if (CanTranslateModel(AABB, visibleRect, currentDelta, Vector3f(0.0, 0.0, -delta)))
+        m_scene->MoveCamera(0.0, 0.0, -delta);
       break;
     default:
       break;
@@ -107,19 +109,19 @@ void ViewerController::MoveModel(Direction dir)
 //---
 void ViewerController::RotateModel(Axis axis, RotationDirection rDir)
 {
-  if (!m_model || !m_view)
+  if (!m_model || !m_view || !m_scene)
     return;
-  auto rotate = rDir == RotationDirection::CW ? delta * -2.0 : delta * 2.0;
+  auto rotate = rDir == RotationDirection::CW ? delta * 10.0 : delta * -10.0;
   switch (axis)
   {
     case Axis::X:
-      m_model->Rotate(0.0, rotate, 0.0);
+      m_scene->RotateCamera(0.0, rotate, 0.0);
       break;
     case Axis::Y:
-      m_model->Rotate(0.0, 0.0, rotate);
+      m_scene->RotateCamera(0.0, 0.0, rotate);
       break;
     case Axis::Z:
-      m_model->Rotate(rotate, 0.0, 0.0);
+      m_scene->RotateCamera(rotate, 0.0, 0.0);
       break;
   }
   m_view->RenderScene();
@@ -138,10 +140,10 @@ void ViewerController::ScaleModel(Scaling scale)
   switch (scale)
   {
     case Scaling::INC:
-      m_model->Scale(delta, delta, delta);
+      m_model->Scale(delta);
       break;
     case Scaling::DESC:
-      m_model->Scale(-delta, -delta, -delta);
+      m_model->Scale(-delta);
       break;
   }
   
@@ -173,10 +175,43 @@ std::vector<unsigned int> ViewerController::GetIndices() const
 
 //------------------------------------------------------------------------------
 /**
-   Получить матрицу MVP
+   Получить матрицу модели
 */
 //---
-Matrix4f ViewerController::GetMVPMatrix() const
+Matrix4f ViewerController::GetModelMatrix() const
 {
   return m_model->GetTransformMatrix();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Получить  матрицу трансформации вида
+*/
+//---
+Matrix4f ViewerController::GetViewMatrix() const
+{
+  return m_scene->GetViewMatrix();
+}
+
+ 
+//------------------------------------------------------------------------------
+/**
+   Получить матрицу проекции
+*/
+//---
+Matrix4f ViewerController::GetProjectionMatrix() const
+{
+  return m_scene->GetProjectionMatrix();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Задать размер области отрисовки
+*/
+//---
+void ViewerController::SetViewport(const Viewport& vieport)
+{
+  m_scene->SetViewport(vieport);
 }

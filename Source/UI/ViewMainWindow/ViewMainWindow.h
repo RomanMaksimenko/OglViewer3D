@@ -28,7 +28,7 @@ public:
   /// Установить подписчика на события представления
   virtual void SetViewObserver(IViewObserver * observer) override;
   /// Установить проводника модели
-  virtual void SetModelProvider(IModelProvider * modelProvider) override;
+  virtual void SetSceneProvider(ISceneProvider * sceneProvider) override;
   /// Отрисовать сцену
   virtual void RenderScene() override;
   /// Получить размер видимой области

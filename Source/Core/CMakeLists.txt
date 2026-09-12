@@ -9,8 +9,12 @@ set(CORE_PUBLIC_HEADERS
 "RW/RWUtils.h"
 "Exceptions/ApplicationException.h"
 "Exceptions/FileException.h"
+"Exceptions/MathException.h"
 "Exceptions/ShaderException.h"
 "Logger/Logger.h"
+"Scene/IScene.h"
+"Scene/ISceneProvider.h"
+"Scene/Viewport.h"
 )
 
 target_sources(Core PRIVATE

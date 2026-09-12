@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Model/IModel.h"
-
 #include <Math/AxisAlignedBoundedBox.h>
 #include <Math/Matrix.h>
+
+#include "Model/IModel.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -31,7 +31,7 @@ public:
   /// Повернуть модель
   virtual void Rotate(float angleX, float angleY, float angleZ) override;
   /// Масштабировать
-  virtual void Scale(float sx, float sy, float sz) override;
+  virtual void Scale(float scale) override;
   /// Получить вершины для отрисовки
   virtual const std::vector<Vertex> & GetVertices() const override;
   /// Получить индексы порядка отрисовки вершин

@@ -7,7 +7,6 @@ set(CONTROLLER_PRIVATE_SOURCES
 
 set(CONTROLLER_PUBLIC_HEADERS
     "IViewObserver.h"
-    "IModelProvider.h"
     "ViewerController.h"
     "IModelService.h"
     "IViewFactory.h"
