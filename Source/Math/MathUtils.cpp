@@ -1,4 +1,4 @@
-#include "MathUtils.h"
+п»ї#include "MathUtils.h"
 
 #include <cmath>
 #include <numbers>
@@ -6,13 +6,13 @@
 
 namespace AngleUtils
 {
-// Перевод угла в градусах в радианы
+// РџРµСЂРµРІРѕРґ СѓРіР»Р° РІ РіСЂР°РґСѓСЃР°С… РІ СЂР°РґРёР°РЅС‹
 float ToDegree(float angleRad)
 {
   return (angleRad * std::numbers::pi) / 180.0f;
 }
 
-// Перевод угла в градусах в радианы
+// РџРµСЂРµРІРѕРґ СѓРіР»Р° РІ РіСЂР°РґСѓСЃР°С… РІ СЂР°РґРёР°РЅС‹
 float ToRadians(float angleDeg)
 {
   return angleDeg *std::numbers::pi / 180.0f;
