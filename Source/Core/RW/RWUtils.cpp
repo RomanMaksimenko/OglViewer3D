@@ -1,4 +1,4 @@
-#include "RWUtils.h"
+п»ї#include "RWUtils.h"
 
 #include <fstream>
 #include <iostream>
@@ -8,7 +8,7 @@
 
 //------------------------------------------------------------------------------
 /**
-   Прочитать файл
+   РџСЂРѕС‡РёС‚Р°С‚СЊ С„Р°Р№Р»
 */
 //---
 std::string ReadFile(const std::filesystem::path& path)
@@ -29,7 +29,7 @@ std::string ReadFile(const std::filesystem::path& path)
 
 //------------------------------------------------------------------------------
 /**
-   Записать файл
+   Р—Р°РїРёСЃР°С‚СЊ С„Р°Р№Р»
 */
 //---
 bool WriteFile(const std::filesystem::path& path, std::string_view data)

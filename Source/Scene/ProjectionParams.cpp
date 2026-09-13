@@ -1,4 +1,4 @@
-#include "ProjectionParams.h"
+п»ї#include "ProjectionParams.h"
 
 #include <Core/Exceptions/MathException.h>
 #include <Math/MathUtils.h>
@@ -31,7 +31,7 @@ ProjectionParams::ProjectionParams(float FOV, const Viewport & viewport, float z
 
 //------------------------------------------------------------------------------
 /**
-   Задать угол обзора
+   Р—Р°РґР°С‚СЊ СѓРіРѕР» РѕР±Р·РѕСЂР°
 */
 //---
 void ProjectionParams::SetFieldOfView(float FOV)
@@ -45,7 +45,7 @@ void ProjectionParams::SetFieldOfView(float FOV)
 
 //------------------------------------------------------------------------------
 /**
-   Получить угол обзора
+   РџРѕР»СѓС‡РёС‚СЊ СѓРіРѕР» РѕР±Р·РѕСЂР°
 */
 //---
 float ProjectionParams::GetFieldOfView() const
@@ -56,7 +56,7 @@ float ProjectionParams::GetFieldOfView() const
 
 //------------------------------------------------------------------------------
 /**
-   Задать viewport
+   Р—Р°РґР°С‚СЊ viewport
 */
 //---
 void ProjectionParams::SetViewport(const Viewport & viewport)
@@ -70,7 +70,7 @@ void ProjectionParams::SetViewport(const Viewport & viewport)
 
 //------------------------------------------------------------------------------
 /**
-   Получить viewport
+   РџРѕР»СѓС‡РёС‚СЊ viewport
 */
 //---
 Viewport ProjectionParams::GetViewport() const
@@ -81,7 +81,7 @@ Viewport ProjectionParams::GetViewport() const
 
 //------------------------------------------------------------------------------
 /**
-   Задать расстояние до ближней плоскости отсечения
+   Р—Р°РґР°С‚СЊ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ Р±Р»РёР¶РЅРµР№ РїР»РѕСЃРєРѕСЃС‚Рё РѕС‚СЃРµС‡РµРЅРёСЏ
 */
 //---
 void ProjectionParams::SetNearZ(float nearz)
@@ -95,7 +95,7 @@ void ProjectionParams::SetNearZ(float nearz)
 
 //------------------------------------------------------------------------------
 /**
-   Получить расстояние до ближней плоскости отсечения
+   РџРѕР»СѓС‡РёС‚СЊ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ Р±Р»РёР¶РЅРµР№ РїР»РѕСЃРєРѕСЃС‚Рё РѕС‚СЃРµС‡РµРЅРёСЏ
 */
 //---
 float ProjectionParams::GetNearZ() const
@@ -106,7 +106,7 @@ float ProjectionParams::GetNearZ() const
 
 //------------------------------------------------------------------------------
 /**
-   Задать расстояние до дальней плоскости отсечения
+   Р—Р°РґР°С‚СЊ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ РґР°Р»СЊРЅРµР№ РїР»РѕСЃРєРѕСЃС‚Рё РѕС‚СЃРµС‡РµРЅРёСЏ
 */
 //---
 void ProjectionParams::SetFarZ(float farZ)
@@ -120,7 +120,7 @@ void ProjectionParams::SetFarZ(float farZ)
 
 //------------------------------------------------------------------------------
 /**
-   Получить расстояние до дальней плоскости отсечения
+   РџРѕР»СѓС‡РёС‚СЊ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ РґР°Р»СЊРЅРµР№ РїР»РѕСЃРєРѕСЃС‚Рё РѕС‚СЃРµС‡РµРЅРёСЏ
 */
 //---
 float ProjectionParams::GetFarZ() const
@@ -131,7 +131,7 @@ float ProjectionParams::GetFarZ() const
 
 //------------------------------------------------------------------------------
 /**
-   Выдать матрицу проецирования по текущим параметрам
+   Р’С‹РґР°С‚СЊ РјР°С‚СЂРёС†Сѓ РїСЂРѕРµС†РёСЂРѕРІР°РЅРёСЏ РїРѕ С‚РµРєСѓС‰РёРј РїР°СЂР°РјРµС‚СЂР°Рј
 */
 //---
 const Matrix4f & ProjectionParams::GetProjectionMatrix() const
@@ -142,7 +142,7 @@ const Matrix4f & ProjectionParams::GetProjectionMatrix() const
 
 //------------------------------------------------------------------------------
 /**
-   Обновить матрицу проецирования
+   РћР±РЅРѕРІРёС‚СЊ РјР°С‚СЂРёС†Сѓ РїСЂРѕРµС†РёСЂРѕРІР°РЅРёСЏ
 */
 //---
 void ProjectionParams::UpdateProjectionMatrix()
