@@ -15,6 +15,7 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
 add_subdirectory(3dparty)
+add_subdirectory(Source)
 add_subdirectory(Source/Controller)
 add_subdirectory(Source/Math)
 add_subdirectory(Source/Model)

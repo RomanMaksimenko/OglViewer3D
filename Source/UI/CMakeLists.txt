@@ -7,6 +7,7 @@ set(UI_PRIVATE_SOURCES
     "RenderView/Mesh.cpp"
     "RenderView/Shader.cpp"
     "RenderView/ShaderProgram.cpp"
+    "RenderView/Texture.cpp"
     "ViewMainWindow/ViewMainWindow.cpp"
     "ViewFactory/ViewFactory.cpp"
 )
