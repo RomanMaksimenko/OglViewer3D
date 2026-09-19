@@ -20,7 +20,7 @@ class Image
   unsigned char * m_imageData = nullptr; ///< изображение
   int m_width = 0;                       ///< ширина изображения
   int m_height = 0;                      ///< высота изображения
-  int m_channels = 0;                         ///< количество байт на пиксель
+  int m_channels = 0;                    ///< количество каналов
 public:
   Image() = default;
   ~Image();

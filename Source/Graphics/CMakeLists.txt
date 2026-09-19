@@ -14,7 +14,6 @@ target_sources(Graphics PRIVATE
 
  target_include_directories(Graphics PUBLIC
    ${CMAKE_SOURCE_DIR}/Source
-   ${CMAKE_SOURCE_DIR}/3dparty
 )
 
 target_link_libraries(Graphics PUBLIC stb_image)
