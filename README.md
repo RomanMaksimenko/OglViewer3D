@@ -1,7 +1,7 @@
 # OGL3dViewer
 
 Пет-проект: 3D-просмотрщик на OpenGL с использованием Qt 6 и современного C++23.
-![](docs/screenshot.jpg)
+>![](docs/screenshot.jpg)
 ---
 
 ## 📖 О проекте
