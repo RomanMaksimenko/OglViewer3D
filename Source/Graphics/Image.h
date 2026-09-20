@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <string>
+#include <filesystem>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +31,7 @@ public:
   Image & operator=(Image &&) noexcept;
 
   /// Загрузить изображение
-  void Load(const std::string & filePath);
+  void Load(const std::filesystem::path & path);
   /// Загружено ли изображение
   bool IsLoaded() const noexcept;
   /// Геттеры данных изображения

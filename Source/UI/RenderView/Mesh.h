@@ -11,6 +11,7 @@
 #include <vector>
 
 #include <Math/Vertex.h>
+#include "Texture.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -26,6 +27,7 @@ private:
   GLuint m_VBO = 0;
   GLuint m_EBO = 0;
   size_t m_indexCount = 0;
+  Texture * m_texture = nullptr;
 
 public:
   Mesh() = default;
