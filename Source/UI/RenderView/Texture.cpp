@@ -9,7 +9,7 @@
 
 */
 //---
-Texture::Texture(GLenum textureTarget, const std::string & source)
+Texture::Texture(GLenum textureTarget, const std::filesystem::path & source)
   : m_textureTarget(textureTarget)
   , m_textureID(0)
   , m_textureSource(source)
@@ -87,7 +87,7 @@ void Texture::Load()
   img.Load(m_textureSource);
 
   if (!img.IsLoaded())
-    throw FileException("Failed to load texture" + m_textureSource);
+    throw FileException("Failed to load texture" + m_textureSource.string());
 
   glGenTextures(1, &m_textureID);
   glBindTexture(m_textureTarget, m_textureID);

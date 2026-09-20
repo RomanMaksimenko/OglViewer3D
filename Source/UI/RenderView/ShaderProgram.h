@@ -21,6 +21,7 @@ class ShaderProgram
 private:
   GLuint m_program = 0;
   GLuint m_transformLocation = 0;
+  GLuint m_sampler2dLocation = 0;
 
 public:
   ShaderProgram() = default;
@@ -43,5 +44,7 @@ public:
   GLuint Id() const { return m_program; }
   // Выдать идентификатор матрицы трансформации
   GLuint TransformLocation() const { return m_transformLocation; }
+  // Выдать идентификатор Sampler
+  GLuint Sampler2DLocation() const { return m_sampler2dLocation; }
 
 };

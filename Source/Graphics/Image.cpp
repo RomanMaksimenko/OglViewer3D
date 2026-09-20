@@ -1,6 +1,7 @@
 ﻿#include "Image.h"
 
 #include <Core/Exceptions/FileException.h>
+#include <string>
 
 #include "stb_image.h"
 
@@ -61,13 +62,13 @@ Image & Image::operator=(Image && other) noexcept
   Загрузить изображение
 */
 //---
-void Image::Load(const std::string & filePath)
+void Image::Load(const std::filesystem::path & path)
 {
   ClearData();
   stbi_set_flip_vertically_on_load(1);
-  m_imageData = stbi_load(filePath.c_str(), &m_width, &m_height, &m_channels, 0);
+  m_imageData = stbi_load(path.string().c_str(), &m_width, &m_height, &m_channels, 0);
   if (!m_imageData)
-    throw FileException("Cannot load texture from file " + filePath);
+    throw FileException("Cannot load texture from file " + path.string());
 }
 
 

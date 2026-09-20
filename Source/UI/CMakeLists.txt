@@ -31,8 +31,12 @@ target_include_directories(UI PUBLIC
 )
 
 # Системный путь к папке с шейдерами
-target_compile_definitions(UI PRIVATE
+target_compile_definitions(UI PUBLIC
     SHADER_DIR="${CMAKE_SOURCE_DIR}/Source/UI/OpenGL/Shaders"
+)
+
+target_compile_definitions(UI PUBLIC
+    IMAGES_DIR="${CMAKE_SOURCE_DIR}/Source/UI/OpenGL/images"
 )
 
 # target UI зависит от Qt и OpenGL

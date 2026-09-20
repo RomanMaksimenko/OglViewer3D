@@ -17,4 +17,5 @@
 struct Vertex
 {
   Vector3f m_position;
+  Vector2f m_texCoord;
 };

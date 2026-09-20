@@ -2,8 +2,8 @@
 
 #include <Core/RW/RWUtils.h>
 
-#include "UI/RenderView/Shader.h"
 #include "Core/Exceptions/ShaderException.h"
+#include "UI/RenderView/Shader.h"
 
 
 //------------------------------------------------------------------------------
@@ -13,9 +13,12 @@
 //---
 ShaderProgram::ShaderProgram(ShaderProgram && other) noexcept
   : m_program(other.m_program)
+  , m_transformLocation(other.m_transformLocation)
+  , m_sampler2dLocation(other.m_sampler2dLocation)
 {
   other.m_program = 0;
   other.m_transformLocation = 0;
+  other.m_sampler2dLocation = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -41,8 +44,10 @@ ShaderProgram & ShaderProgram::operator=(ShaderProgram && other) noexcept
     Destroy();
     m_program = other.m_program;
     m_transformLocation = other.m_transformLocation;
+    m_sampler2dLocation = other.m_sampler2dLocation;
     other.m_program = 0;
     other.m_transformLocation = 0;
+    other.m_sampler2dLocation = 0;
   }
   return *this;
 }
@@ -68,7 +73,7 @@ void ShaderProgram::Create()
   glAttachShader(m_program, vertexShader.GetShaderObj());
   glAttachShader(m_program, fragmentShader.GetShaderObj());
   glLinkProgram(m_program);
-  
+
   // Проверим успешность линковки программы
   GLint success;
   glGetProgramiv(m_program, GL_LINK_STATUS, &success);
@@ -91,7 +96,13 @@ void ShaderProgram::Create()
     throw ShaderException("Failed to get uniform Transform location\n");
   }
 
-   // Отсоединяем после успешной линковки
+  m_sampler2dLocation = glGetUniformLocation(m_program, "gSampler");
+  if (m_sampler2dLocation == 0)
+  {
+    throw ShaderException("Failed to get uniform Sampler2D location\n");
+  }
+
+  // Отсоединяем после успешной линковки
   glDetachShader(m_program, vertexShader.GetShaderObj());
   glDetachShader(m_program, fragmentShader.GetShaderObj());
 }
@@ -107,4 +118,5 @@ void ShaderProgram::Destroy()
   glDeleteProgram(m_program);
   m_program = 0;
   m_transformLocation = 0;
+  m_sampler2dLocation = 0;
 }

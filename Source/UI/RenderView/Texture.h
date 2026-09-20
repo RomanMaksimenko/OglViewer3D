@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <string>
+#include <filesystem>
 
 #include <GL/glew.h>
 
@@ -22,9 +22,9 @@ class Texture
 {
   GLenum m_textureTarget = 0;  ///< Тип текстуры
   GLuint m_textureID = 0;      ///< Идентификатор текстуры
-  std::string m_textureSource; ///< Путь к файлу текстуры
+  std::filesystem::path m_textureSource = ""; ///< Путь к файлу текстуры
 public:
-  explicit Texture(GLenum textureTarget, const std::string & source);
+  explicit Texture(GLenum textureTarget, const std::filesystem::path & source);
   // Конструктор копирования
   Texture(const Texture &) = delete;
   // Move-конструктор
