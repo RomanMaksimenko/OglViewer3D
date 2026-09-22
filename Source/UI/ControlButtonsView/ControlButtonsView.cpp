@@ -1,17 +1,160 @@
 ﻿#include "ControlButtonsView.h"
 
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QLabel>
+#include <QVBoxLayout>
+#include <QTimer>
 
 #include "Controller/IViewObserver.h"
 
-namespace Transforms
+
+////////////////////////////////////////////////////////////////////////////////
+//
+///
+/** 
+    Приватный объект для инкапсуляции логики обработки долгого нажатия клавиш движения
+*/
+////////////////////////////////////////////////////////////////////////////////
+class MovementTimer : public QTimer
 {
-constexpr float delta = 0.05;
-constexpr float angle = 0.01;
-constexpr float scale = 0.1;
-} // namespace Transforms
+  Q_OBJECT
+private:
+  Direction m_direction = Direction::None; ///< направление перемещения
+  struct Rotation
+  {
+    Axis axis = Axis::None;
+    RotationDirection rotDir = RotationDirection::None;
+  } m_rotation;                    ///< направление вращения
+  Scaling m_scale = Scaling::None; ///< масштабирование
+
+public:
+  explicit MovementTimer(QObject * parent);
+  void StartMove(Direction dir);
+  void StopMove();
+  void StartRotate(Axis a, RotationDirection rd);
+  void StopRotate();
+  void StartScale(Scaling sc);
+  void StopScale();
+
+private:
+  void Transform();
+
+signals:
+  void Move(Direction dir);
+  void Rotate(Axis a, RotationDirection rd);
+  void Scale(Scaling sc);
+};
+
+
+//------------------------------------------------------------------------------
+/**
+   
+*/
+//---
+MovementTimer::MovementTimer(QObject * parent)
+  : QTimer(parent)
+{
+  setInterval(16);
+  connect(this, &QTimer::timeout, this, &MovementTimer::Transform);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Начать движение
+*/
+//---
+void MovementTimer::StartMove(Direction dir)
+{
+  m_rotation = Rotation{Axis::None, RotationDirection::None};
+  m_scale = Scaling::None;
+
+  m_direction = dir;
+  start();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+  Прекратить движение
+*/
+//---
+void MovementTimer::StopMove()
+{
+  m_direction = Direction::None;
+  stop();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Начать вращение
+*/
+//---
+void MovementTimer::StartRotate(Axis a, RotationDirection rd)
+{
+  m_direction = Direction::None;
+  m_scale = Scaling::None;
+
+  m_rotation = Rotation{a, rd};
+  start();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+  Прекратить вращение
+*/
+//---
+void MovementTimer::StopRotate()
+{
+  m_rotation = Rotation{Axis::None, RotationDirection::None};
+  stop();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Начать масштабирование
+*/
+//---
+void MovementTimer::StartScale(Scaling sc)
+{
+  m_direction = Direction::None;
+  m_rotation = Rotation{Axis::None, RotationDirection::None};
+
+  m_scale = sc;
+  start();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Прекратить масштабирование
+*/
+//---
+void MovementTimer::StopScale()
+{
+  m_scale = Scaling::None;
+  stop();
+}
+
+
+//------------------------------------------------------------------------------
+/**
+   Трансформация по таймеру
+*/
+//---
+void MovementTimer::Transform()
+{
+  if (m_direction != Direction::None)
+    emit Move(m_direction);
+  if (m_rotation.axis != Axis::None && m_rotation.rotDir != RotationDirection::None)
+    emit Rotate(m_rotation.axis, m_rotation.rotDir);
+  if (m_scale != Scaling::None)
+    emit Scale(m_scale);
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -19,7 +162,7 @@ constexpr float scale = 0.1;
 //---
 ControlButtonsView::ControlButtonsView(QWidget * parent)
   : QWidget(parent)
-  , moveLeft(new QPushButton("Влево",this))
+  , moveLeft(new QPushButton("Влево", this))
   , moveRight(new QPushButton("Вправо", this))
   , moveUp(new QPushButton("Вверх", this))
   , moveDown(new QPushButton("Вниз", this))
@@ -33,6 +176,7 @@ ControlButtonsView::ControlButtonsView(QWidget * parent)
   , rotateCCWZ(new QPushButton("Против", this))
   , scaleUp(new QPushButton("+", this))
   , scaleDown(new QPushButton("-", this))
+  , m_timer(new MovementTimer(this))
 {
   QVBoxLayout * verticalLayout = new QVBoxLayout(this);
   // Наполнение блока "Перемещение"
@@ -85,23 +229,53 @@ ControlButtonsView::ControlButtonsView(QWidget * parent)
   verticalLayout->addLayout(scaleBtns);
 
   setLayout(verticalLayout);
-  // Перемещение
-  connect(moveLeft, &QPushButton::clicked, this, [this]() { this->MoveButtonPushed(Direction::Left); });
-  connect(moveRight, &QPushButton::clicked, this, [this]() { this->MoveButtonPushed(Direction::Right); });
-  connect(moveUp, &QPushButton::clicked, this, [this]() { this->MoveButtonPushed(Direction::Up); });
-  connect(moveDown, &QPushButton::clicked, this, [this]() { this->MoveButtonPushed(Direction::Down); });
-  connect(moveFront, &QPushButton::clicked, this, [this]() { this->MoveButtonPushed(Direction::Front); });
-  connect(moveBack, &QPushButton::clicked, this, [this]() { this->MoveButtonPushed(Direction::Back); });
-  // Вращение
-  connect(rotateCWX, &QPushButton::clicked, this, [this]() { this->RotateButtonPushed(Axis::X, RotationDirection::CW); });
-  connect(rotateCCWX, &QPushButton::clicked, this, [this]() { this->RotateButtonPushed(Axis::X, RotationDirection::CCW); });
-  connect(rotateCWY, &QPushButton::clicked, this, [this]() { this->RotateButtonPushed(Axis::Y, RotationDirection::CW); });
-  connect(rotateCCWY, &QPushButton::clicked, this, [this]() { this->RotateButtonPushed(Axis::Y, RotationDirection::CCW); });
-  connect(rotateCWZ, &QPushButton::clicked, this, [this]() { this->RotateButtonPushed(Axis::Z, RotationDirection::CW); });
-  connect(rotateCCWZ, &QPushButton::clicked, this, [this]() { this->RotateButtonPushed(Axis::Z, RotationDirection::CCW); });
-  // Масштабирование
-  connect(scaleUp, &QPushButton::clicked, this, [this]() { this->ScaleButtonPushed(Scaling::INC); });
-  connect(scaleDown, &QPushButton::clicked, this, [this]() { this->ScaleButtonPushed(Scaling::DESC); });
+
+  connect(m_timer, &MovementTimer::Move, this, &ControlButtonsView::MoveButtonPushed);
+  connect(m_timer, &MovementTimer::Rotate, this, &ControlButtonsView::RotateButtonPushed);
+  connect(m_timer, &MovementTimer::Scale, this, &ControlButtonsView::ScaleButtonPushed);
+
+  // Перемещение влево
+  connect(moveLeft, &QPushButton::pressed, m_timer, [this]() { m_timer->StartMove(Direction::Left); });
+  connect(moveLeft, &QPushButton::released, m_timer, &MovementTimer::StopMove);
+  // Перемещение вправо
+  connect(moveRight, &QPushButton::pressed, this, [this]() { m_timer->StartMove(Direction::Right); });
+  connect(moveRight, &QPushButton::released, m_timer, &MovementTimer::StopMove);
+  // Перемещение вверх
+  connect(moveUp, &QPushButton::pressed, this, [this]() { m_timer->StartMove(Direction::Up); });
+  connect(moveUp, &QPushButton::released, m_timer, &MovementTimer::StopMove);
+  // Перемещение вниз
+  connect(moveDown, &QPushButton::pressed, this, [this]() { m_timer->StartMove(Direction::Down); });
+  connect(moveDown, &QPushButton::released, m_timer, &MovementTimer::StopMove);
+  // Перемещение вперед
+  connect(moveFront, &QPushButton::pressed, this, [this]() { m_timer->StartMove(Direction::Front); });
+  connect(moveFront, &QPushButton::released, m_timer, &MovementTimer::StopMove);
+  // Перемещение назад
+  connect(moveBack, &QPushButton::pressed, this, [this]() { m_timer->StartMove(Direction::Back); });
+  connect(moveBack, &QPushButton::released, m_timer, &MovementTimer::StopMove);
+  // Вращение вокруг X по часовой стрелке
+  connect(rotateCWX, &QPushButton::pressed, this, [this]() { m_timer->StartRotate(Axis::X, RotationDirection::CW); });
+  connect(rotateCWX, &QPushButton::released, m_timer, &MovementTimer::StopRotate);
+  // Вращение вокруг X против часовой стрелки
+  connect(rotateCCWX, &QPushButton::pressed, this, [this]() { m_timer->StartRotate(Axis::X, RotationDirection::CCW); });
+  connect(rotateCCWX, &QPushButton::released, m_timer, &MovementTimer::StopRotate);
+  // Вращение вокруг Y по часовой стрелке
+  connect(rotateCWY, &QPushButton::pressed, this, [this]() { m_timer->StartRotate(Axis::Y, RotationDirection::CW); });
+  connect(rotateCWY, &QPushButton::released, m_timer, &MovementTimer::StopRotate);
+  // Вращение вокруг Y против часовой стрелки
+  connect(rotateCCWY, &QPushButton::pressed, this, [this]() { m_timer->StartRotate(Axis::Y, RotationDirection::CCW); });
+  connect(rotateCCWY, &QPushButton::released, m_timer, &MovementTimer::StopRotate);
+  // Вращение вокруг Z по часовой стрелке
+  connect(rotateCWZ, &QPushButton::pressed, this, [this]() { m_timer->StartRotate(Axis::Z, RotationDirection::CW); });
+  connect(rotateCWZ, &QPushButton::released, m_timer, &MovementTimer::StopRotate);
+  // Вращение вокруг Z против часовой стрелки
+  connect(rotateCCWZ, &QPushButton::pressed, this, [this]() { m_timer->StartRotate(Axis::Z, RotationDirection::CCW); });
+  connect(rotateCCWZ, &QPushButton::released, m_timer, &MovementTimer::StopRotate);
+  // Увеличение масштаба
+  connect(scaleUp, &QPushButton::pressed, this, [this]() { m_timer->StartScale(Scaling::INC); });
+  connect(scaleUp, &QPushButton::released, m_timer, &MovementTimer::StopScale);
+  // Уменьшение масштаба
+  connect(scaleDown, &QPushButton::pressed, this, [this]() { m_timer->StartScale(Scaling::DESC); });
+  connect(scaleDown, &QPushButton::released, m_timer, &MovementTimer::StopScale);
 }
 
 
@@ -171,3 +345,5 @@ IControlButtonsView * CreateControlButtonsView(QWidget * parent)
 {
   return new ControlButtonsView(parent);
 }
+
+#include "ControlButtonsView.moc"
