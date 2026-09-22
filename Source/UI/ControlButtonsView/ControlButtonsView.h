@@ -16,6 +16,8 @@ enum class Axis;
 enum class RotationDirection;
 enum class Scaling;
 
+class MovementTimer;
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 /// Виджет, содержащий кнопки управления моделью
@@ -43,6 +45,7 @@ private:
   QPushButton * rotateCCWZ = nullptr;
   QPushButton * scaleUp = nullptr;
   QPushButton * scaleDown = nullptr;
+  MovementTimer * m_timer = nullptr;
 
 public:
   ControlButtonsView(QWidget * parent = nullptr);
@@ -52,7 +55,7 @@ public:
   /// Выдать указатель на себя как на QWidget
   virtual QWidget * widget() override;
 
-private slots:
+private:
   void MoveButtonPushed(Direction dir);
   void RotateButtonPushed(Axis axis, RotationDirection rDir);
   void ScaleButtonPushed(Scaling sc);

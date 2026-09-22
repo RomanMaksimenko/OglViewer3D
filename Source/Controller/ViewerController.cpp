@@ -12,7 +12,7 @@
 namespace
 {
 /// Константы трансляции модели
-constexpr double delta = 0.1;
+constexpr double delta = 0.01;
 } // namespace
 
 

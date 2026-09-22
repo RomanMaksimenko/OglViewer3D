@@ -14,7 +14,8 @@ enum class Direction
   Up,
   Down,
   Front,
-  Back
+  Back,
+  None
 };
 
 
@@ -23,23 +24,26 @@ enum class Axis
 {
   X,
   Y,
-  Z
+  Z,
+  None
 };
 
 
 /// Направление вращения
 enum class RotationDirection
 {
-	CW, // по часовой стрелке
-	CCW // против часово стрелки
+  CW, // по часовой стрелке
+  CCW, // против часово стрелки
+  None
 };
 
 
 /// Масштабирование
 enum class Scaling
 {
-	INC, // увеличить
-	DESC // уменьшить
+  INC, // увеличить
+  DESC, // уменьшить
+  None
 };
 
 
@@ -58,7 +62,7 @@ struct IViewObserver
   // Обработка нажатия на кнопки трансляции
   virtual void MoveModel(Direction dir) = 0;
   // Обработка нажатия на кнопки вращения модели
-  virtual void RotateModel(Axis axis,RotationDirection rDir) = 0;
+  virtual void RotateModel(Axis axis, RotationDirection rDir) = 0;
   // Обработка нажатия на кнопки масштаба
   virtual void ScaleModel(Scaling scale) = 0;
 };
