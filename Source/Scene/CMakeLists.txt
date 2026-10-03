@@ -3,13 +3,17 @@ add_library(Scene)
 set(SCENE_PRIVATE_SOURCES 
   "Scene.cpp"
   "ProjectionParams.cpp"
-  "Camera/Camera.cpp")  
+  "Camera/Camera.cpp"
+  "Frustum/Plane.cpp")  
 
 set(SCENE_PUBLIC_HEADERS
   "Scene.h")
+set(SCENE_PRIVATE_HEADERS
+  "Frustum/Plane.h")
 
 target_sources(Scene PRIVATE
   ${SCENE_PRIVATE_SOURCES}
+  ${SCENE_PRIVATE_HEADERS}
   PUBLIC
   ${SCENE_PUBLIC_HEADERS}
  )
