@@ -19,7 +19,7 @@ Plane::Plane(const Vector3f & n, float offset)
    Рассчитать расстояние до точки
 */
 //---
-float Plane::DistanceToPoint(const Vector3f & point) const
+float Plane::SignedDistanceToPoint(const Vector3f & point) const
 {
   return m_normal.Dot(point) + m_offset;
 }
@@ -35,7 +35,7 @@ float Plane::DistanceToPoint(const Vector3f & point) const
 float Plane::DistanceToAABB(const AxisAlignedBoundedBox & box) const
 {
   auto supportPoint = GetSupportPoint(box);
-  return DistanceToPoint(supportPoint);
+  return SignedDistanceToPoint(supportPoint);
 }
 
 
@@ -46,6 +46,6 @@ float Plane::DistanceToAABB(const AxisAlignedBoundedBox & box) const
 //--- 
 Vector3f Plane::GetSupportPoint(const AxisAlignedBoundedBox & aabb) const
 {
-  return {m_normal.x > 0 ? aabb.Max().x : aabb.Min().x, m_normal.y > 0 ? aabb.Max().y : aabb.Min().y,
-          m_normal.z > 0 ? aabb.Max().z : aabb.Min().z};
+  return {m_normal.x > 0 ? aabb.Min().x : aabb.Max().x, m_normal.y > 0 ? aabb.Min().y : aabb.Max().y,
+          m_normal.z > 0 ? aabb.Min().z : aabb.Max().z};
 }

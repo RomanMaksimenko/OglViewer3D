@@ -27,7 +27,7 @@ public:
   Plane() = default;
   Plane(const Vector3f & n, float offset);
   // Рассчитать расстояние до точки
-  float DistanceToPoint(const Vector3f & point) const;
+  float SignedDistanceToPoint(const Vector3f & point) const;
   // Рассчитать расттояние до ограничивающего куба
   float DistanceToAABB(const AxisAlignedBoundedBox & box) const;
 
